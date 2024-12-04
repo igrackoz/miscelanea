@@ -1,0 +1,255 @@
+.billboard-container{
+    background-color:rgb(242, 238, 247);
+    padding: 20px;
+}
+
+.box-billboard{
+
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    background-color:rgb(242, 238, 247);
+}
+
+.billboard-titles{
+
+    margin-top: 20px;
+    height: 80px;
+    width: 100%;
+    font-size: 15px;
+    color: rgb(99, 99, 99);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-news{
+
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    height: 500px;
+    font-size: 50px;
+    background-color: orange;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: start;
+    grid-row-end: two;
+}
+
+.gallery{
+    
+    display: flex;
+    flex-shrink: 0;
+    transform: translateX(0%);
+    animation: slideIn 0.5s ease;
+}
+
+.slideshow{
+
+    overflow: hidden;
+    z-index: 10;
+}
+
+.slide-left{
+
+    position: absolute;
+    height: 100%;
+    width: 35%;
+    left: 0;
+    margin-left: auto;
+    transform: rotateZ(180deg);
+}
+.slide-right{
+
+    position: absolute;
+    height: 100%;
+    width: 35%;
+    right: 0;
+    margin-right: auto;
+}
+
+.slide-center{
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.arrow{
+
+    filter:drop-shadow(0px 0px 20px rgb(0, 0, 0));
+    width: 11mm;
+    height: 11mm;
+    margin-right: 10px;
+}
+
+
+.dot-news{
+    
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    height: 31px;
+    width: 100%;
+    bottom: 0;
+    padding: 8px;
+    gap: 10px;
+    opacity: 0.8;
+}
+
+/* ------------------------------------------------------- */
+
+.top-selling-box{
+
+    height: 280px;
+    
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    overflow-x: auto;
+}
+
+.sell-gallery{
+    
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+    overflow-x: scroll;
+}
+
+.best-selled-products{
+    
+    height:100%;
+    width: 200px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: -10px 10px 42px -38px rgba(0,0,0,0.75);
+}
+
+/* ------------------------------------------------------- */
+
+.box-dep{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 200px;
+    font-size: 30px;
+    flex: 0 1 calc(50% - 10px);
+    padding-right: 10px;
+    padding-left: 25px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color:rgb(250, 250, 250);
+    box-shadow: -10px 10px 42px -38px rgba(0,0,0,0.75);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dep-text{
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dep-image{
+
+    position:relative;
+    bottom: 0;
+    right: 0;
+    height: 150px;
+    width: 150px;
+}
+
+@media only screen and (max-width: 755px) {
+
+    .box-dep{
+
+            flex: 0 1 calc(100%);
+            box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .billboard-container{
+
+        padding: 10px;
+    }
+
+    .box-billboard{
+
+        gap: 10px;
+    }
+
+    .box-dep{
+
+        height: 120px;
+        font-size: 20px;
+    }
+
+    .dep-image{
+    
+        height: 100px;
+        width: 100px;
+    }
+
+    .box-news{
+    
+        height: 250px;
+    }
+
+    .cool-navbar{
+
+        display: block;
+    }
+}
+
+.cool-navbar{
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: fixed;
+    height: 18mm;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 14px;
+    border-radius: 9mm;
+    background-color: #e64747;
+    box-shadow: -1px 3px 87px -10px rgba(0,0,0,0.75);
+    z-index: 1;
+    transform: translateY(0px);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.19, 1);
+}
+
+.cool-navbar.ocultar {
+
+    transform: translateY(200px);
+}
+
+.cool-elements{
+
+    font-weight: bold;
+    height: 100%;
+    width: 20%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;color: #fff;
+}
+
+.material-icons {
+
+    color: #FFF; /* Puedes modificar también el color */
+}

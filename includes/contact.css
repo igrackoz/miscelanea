@@ -1,0 +1,70 @@
+.btn-contact{
+    
+    background-color: rgb(0,230,118);
+    border: 3px solid rgb(0,230,118);
+    border-radius: 10mm;
+    position: fixed;
+    height: 20mm;
+    width: 20mm;
+    right: 0;
+    bottom: 0;
+    margin: 20px;
+    user-select: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}.btn-contact:hover{
+
+    background-color: rgb(255,255,255);
+}
+
+
+
+.hover-popup {
+
+    background-color: rgb(255,255,255);
+    color: rgb(0,230,118);
+    outline: 3px solid rgb(0,230,118);
+    border-radius: 9mm 9mm 9mm 9mm;
+    position: fixed;
+    height: 18mm;
+    width: 18mm;
+    right: 85px;
+    bottom: 0;
+    margin: 20px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    font-size: 0px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+#popup {
+    transition: width 0.3s ease, opacity 0.2s ease, font-size 0.1s ease;
+}
+
+#contact {
+
+    transition: background-color 0.4s ease;
+}
+
+#logo {
+    
+    transition: filter 0.4s ease;
+}
+
+.logo-contact{
+
+    height: 15mm;
+    width: 15mm;
+    user-select: none;pointer-events: none;
+    filter: brightness(0) saturate(100%) invert(97%) sepia(95%) saturate(19%) hue-rotate(163deg) brightness(104%) contrast(101%);
+    
+}.logo-contact:hover{
+
+    filter: brightness(0) saturate(100%) invert(73%) sepia(57%) saturate(2828%) hue-rotate(97deg) brightness(96%) contrast(101%);
+}

@@ -1,0 +1,57 @@
+menu panel
+
+ - añadir secciones y categorías
+
+
+DEPARTAMENTOS
+
+- frutas y verduras
+- mascotas
+
+
+SERVICIOS
+
+Recarga celular
+pago con tarjeta y transferencia
+entrega a domicilio por sitio web
+
+
+
+diseñar pagina de detalles del productos
+diseñar pagina de carrito de compras
+
+crear sistema de busqueda
+
+
+integrar sistema de filtrado de productos
+
+
+
+- departamentos
+- secciones
+- apartados
+
+
+
+
+ diseñar panel de carrito lateral de compras en formato de ticket
+
+
+BASE DE DATOS
+
+    tabla de DATOS
+    tabla de proveedores
+    crear sistema de costo variable de productos prioritario
+
+
+
+
+
+SECURITY
+
+- generar tokens para descifrado
+- almacenamiento de tokens
+- implementar cifrado de datos personales
+
+
+

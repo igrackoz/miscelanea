@@ -1,0 +1,6 @@
+body,html{
+    padding: 0 !important;
+    margin: 0  !important;
+}
+
+*{outline: 0px solid black;}
