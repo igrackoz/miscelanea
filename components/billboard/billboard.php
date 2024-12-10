@@ -1,16 +1,9 @@
 <?php
 
-include "../../includes/head.php";
-
-session_start();
-
-if(isset($_SESSION['nombre']) && isset($_SESSION['apellido'])){
-    
-    $nombre = $_SESSION['nombre'];
-    $apellido = $_SESSION['apellido'];
-} else { }
-
-include "../../includes/dbconnect.php";
+include "../../includes/paths.php";
+include $bp."head.php";
+include $bp."user-validation.php";
+include $bp."dbconnect.php";
 
 $query = "SELECT * FROM departments";
 $dataset = mysqli_query($Conn,$query);
@@ -20,11 +13,12 @@ mysqli_close($Conn);
 ?>
 
 <body>
-    <?php include "../../includes/nav.php"; ?>
-    <?php include "../../includes/mobile-detector.php"; ?>
-    <?php if ($detect->isMobile()) { include "../../includes/nav2.php"; } ?>
-    <?php include "../../includes/contact.php"; ?>
-
+    <?php
+        include $bp."mobile-detector.php";
+        include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
+        include $bp."contact.php";
+        include "../../dev/dev.php";
+    ?>
     
     <div class="billboard-container">
 
@@ -83,13 +77,12 @@ mysqli_close($Conn);
                 <div class="best-selled-products">adas</div>
             </div>
         </div>
-
-
+        
         <div class="billboard-titles">- - - - -&nbsp;&nbsp;&nbsp;&nbsp;Departamentos&nbsp;&nbsp;&nbsp;&nbsp;- - - - -</div>
         
         <div class="box-billboard">
 
-        <?php
+        <?php 
         
             if (mysqli_num_rows($dataset) > 0) {
 
@@ -97,7 +90,7 @@ mysqli_close($Conn);
 
                     if ($row['department_enabled']) { ?>
 
-                        <a href="../department/department.php?iddep=<?= $row['department_id'] ?>" class="box-dep">
+                        <a href="../segment/segment.php?iddep=<?= $row['department_id'] ?>" class="box-dep">
                             <div><?= $row['department_name'] ?></div>
                             <div>
                                 <img class="dep-image" src="../../images/departments/<?= $row['department_image'] ?>">
@@ -120,45 +113,6 @@ let number = 1;
 
 const elements = document.querySelectorAll('[id="order"]');
 const dotArray = Array.from(elements);
-
-let lastScrollTop = 0;
-let ticking = false;
-
-function checkScrollPosition() {
-  const coolnav = document.getElementById('cool-navbar');
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const documentHeight = document.documentElement.scrollHeight;
-  const windowHeight = window.innerHeight;
-
-  // Verifica si el usuario está cerca del final de la página
-  if (documentHeight - scrollTop - windowHeight < 50) { // 50px es un umbral, ajusta según tus necesidades
-    document.querySelector('.cool-navbar').classList.add('ocultar');
-  } else {
-    document.querySelector('.cool-navbar').classList.remove('ocultar');
-  }
-
-  // Solo ejecuta si hay un cambio en la posición de desplazamiento
-  if (scrollTop !== lastScrollTop) {
-    lastScrollTop = scrollTop;
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        console.log('La posición del scroll ha cambiado');
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }
-}
-
-// Llama a la función al cargar la página para iniciar la verificación
-function startChecking() {
-  checkScrollPosition();
-  requestAnimationFrame(startChecking);
-}
-
-// Inicia la verificación de posición al cargar la página
-startChecking();
-
 
 window.addEventListener('DOMContentLoaded', function () {
     
@@ -253,6 +207,8 @@ function slideRight(){
             element.style.order = i+1;
         }
     });
+    
+    resetInterval();
 }
 
 function slideLeft(){
@@ -322,6 +278,26 @@ function slideLeft(){
             element.style.order = i+1;
         }
     });
+
+    resetInterval();
 }
+
+let interval_id;
+
+function startInterval() {
+
+    interval_id = setInterval(slideRight, 6000);
+}
+
+function resetInterval() {
+
+    if (interval_id) {
+        clearInterval(interval_id);
+    }
+
+    startInterval();
+}
+
+startInterval();
 
 </script>

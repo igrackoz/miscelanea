@@ -1,0 +1,26 @@
+.fade-top{
+
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    background: linear-gradient(180deg, rgb(95, 94, 97) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.show {
+
+    opacity: 1;
+}
+
+.dep-title{
+
+    font-size: 35px;
+    color: white;
+    z-index: 999;
+}

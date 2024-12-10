@@ -20,8 +20,10 @@ if($dataset){
         if(password_verify($password, $user['user_password'])){
 
             session_start();
+            $_SESSION['id'] = $user['user_id'];
             $_SESSION['nombre'] = $user['user_firstname'];
             $_SESSION['apellido'] = $user['user_lastname'];
+            $_SESSION['color'] = $user['user_color_picker'];
 
             header("Location: ../billboard/billboard.php");
             exit();

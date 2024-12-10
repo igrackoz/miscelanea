@@ -1,1 +1,4 @@
-<?php header('location:components\billboard\billboard.php') ?>
+<?php 
+    header('location:components\billboard\billboard.php');
+    exit();
+?>

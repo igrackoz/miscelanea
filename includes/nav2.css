@@ -1,0 +1,153 @@
+.cool-navbar{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: fixed;
+    height: 18mm;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 14px;
+    border-radius: 9mm;
+    background-color: #e64747;
+    box-shadow: -1px 3px 87px -10px rgba(0,0,0,0.75);
+    z-index: 1;
+    overflow: hidden;
+    transform: translateY(0px);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.19, 1);
+}
+
+.cool-navbar.ocultar {
+
+    transform: translateY(200px);
+}
+
+.entry{
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.dinamic-search{
+
+    font-weight: bold;
+    height: 100%;
+    width: 20%;
+    color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(0px);
+    transition: transform 0.3s ease;
+}
+
+.dinamic-search.move{
+    
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    position: fixed;
+    left: 140px;
+    transform: translateX(-210%);
+}
+
+.start-search{
+
+    position: fixed;
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    background-color: white;
+    z-index: -2;
+    transition: width 0.3s ease;
+}
+
+.start-search.big{
+
+    width: calc(100% + 50px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.start-search.small{
+
+    width: 10px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.nav2-form{
+
+    display: none;
+}
+
+.cool-search{
+
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 84%;
+    background-color: #ffffff00;
+    margin-left: 60px;
+    display: none;
+    border: none;
+}
+
+.cool-search.show{
+
+    display: block;
+
+}
+
+.dinamic-cancel{
+
+    position: fixed;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    right: 6px;
+    transform: translateX(10%);
+    align-self: center;
+    justify-content: center;
+    display: none;
+}
+
+.dinamic-cancel.move2{
+
+    display: flex;
+}
+
+.dinamic-cancel2{
+
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.cancel-cool-image{
+
+    height: 40px;
+    width: 40px;
+}
+
+.cool-elements{
+
+    font-weight: bold;
+    height: 100%;
+    width: 20%;
+    color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-icons {
+
+    color: #FFF; /* Puedes modificar también el color */
+}

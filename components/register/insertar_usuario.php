@@ -3,7 +3,7 @@
 global $Conn;
 require_once "../../includes/dbconnect.php";
 
-function registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $password){
+function registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $password, $color){
     
     $query = "SELECT * FROM users WHERE user_email='$email'";
     $result = mysqli_query($Conn,$query);
@@ -13,7 +13,7 @@ function registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $p
     
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO users(user_firstname, user_lastname, user_street, user_num_ext, user_email, user_password) VALUES ('$nombre','$apellido','$calle','$numero','$email','$password_hash')";
+    $query = "INSERT INTO users(user_firstname, user_lastname, user_street, user_num_ext, user_email, user_password, user_color_picker) VALUES ('$nombre','$apellido','$calle','$numero','$email','$password_hash','$color')";
     $result = mysqli_query($Conn,$query);
 
     if($result){
@@ -39,8 +39,10 @@ if(isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']
     }
 
     //$email = mysqli_real_escape_string($Conn, $email);
+    
+    $color = rand(0, 360);
 
-    $registro_resultado = registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $password);
+    $registro_resultado = registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $password, $color);
     
     if($registro_resultado){
         header("Location: ../login/login.php?info=registro_exitoso");

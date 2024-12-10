@@ -1,16 +1,10 @@
 <?php
 
-include "../../includes/head.php";
+include "../../includes/paths.php";
+include $bp."head.php";
+include $bp."user-validation.php";
+include $bp."dbconnect.php";
 
-session_start();
-
-if(isset($_SESSION['nombre']) && isset($_SESSION['apellido'])){
-    
-    $nombre = $_SESSION['nombre'];
-    $apellido = $_SESSION['apellido'];
-} else { }
-
-include "../../includes/dbconnect.php";
 $query = "SELECT product_image, product_name, product_price FROM products";
 $dataset = mysqli_query($Conn,$query);
 mysqli_close($Conn);
@@ -18,8 +12,16 @@ mysqli_close($Conn);
 ?>
 
 <body>
-    <?php include "../../includes/nav.php"; ?>
-    <?php include "../../includes/contact.php"; ?>
+    <?php
+        include $bp."mobile-detector.php";
+        include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
+        include $bp."contact.php";
+        include "../../dev/dev.php";
+    ?>
+
+    <div style="height: 50px;"></div>
+    <div style="font-size: 30px; font-weight: light;">Buscaste: <?= '"'.$_GET['cool-search'].'"' ?></div>
+    <div style="height: 50px;"></div>
     <!--
     <div style="height: 100px;"></div>
     

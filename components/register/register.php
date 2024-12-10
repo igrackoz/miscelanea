@@ -99,11 +99,15 @@
 
 <script>
 
-  document.getElementById("numero").addEventListener("input", function(event) {
+document.getElementById("numero").addEventListener("input", function(event) {
+
     this.value = this.value.replace(/[^0-9]/g, '');
+
     if (this.value.length > 4) {
-      this.value = this.value.slice(0, 4);
+        
+        this.value = this.value.slice(0, 4);
     }
-  });
+
+});
   
 </script>

@@ -1,5 +1,4 @@
 .billboard-container{
-    background-color:rgb(242, 238, 247);
     padding: 20px;
 }
 
@@ -10,12 +9,10 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 20px;
-    background-color:rgb(242, 238, 247);
 }
 
 .billboard-titles{
 
-    margin-top: 20px;
     height: 80px;
     width: 100%;
     font-size: 15px;
@@ -120,7 +117,7 @@
 .sell-gallery{
     
     display: flex;
-    gap: 20px;
+    gap: 10px;
     flex-shrink: 0;
     overflow-x: scroll;
 }
@@ -207,49 +204,4 @@
     
         height: 250px;
     }
-
-    .cool-navbar{
-
-        display: block;
-    }
-}
-
-.cool-navbar{
-
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    position: fixed;
-    height: 18mm;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    margin: 14px;
-    border-radius: 9mm;
-    background-color: #e64747;
-    box-shadow: -1px 3px 87px -10px rgba(0,0,0,0.75);
-    z-index: 1;
-    transform: translateY(0px);
-    transition: transform 0.5s cubic-bezier(0.19, 1, 0.19, 1);
-}
-
-.cool-navbar.ocultar {
-
-    transform: translateY(200px);
-}
-
-.cool-elements{
-
-    font-weight: bold;
-    height: 100%;
-    width: 20%;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;color: #fff;
-}
-
-.material-icons {
-
-    color: #FFF; /* Puedes modificar también el color */
 }

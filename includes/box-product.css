@@ -1,0 +1,142 @@
+.box-product{
+
+    width: auto;
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: [start] auto [one] auto [end];
+    grid-template-rows: [start] auto [one] auto [two] auto [three] auto [end];
+    border-radius: 6px;
+    padding: 10px;
+    background-color:rgb(253, 254, 255);
+    box-shadow: -1px 2px 42px -48px rgba(0,0,0,0.75);
+    z-index: 0;
+}
+
+.box-product-image{
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: start;
+    grid-row-end: one;
+}
+
+.box-product-name{
+
+    font-size: 18px;
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: one;
+    grid-row-end: two;
+}
+
+.box-product-price{
+
+    font-size: 20px;
+    color: rgb(69, 158, 69);
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: two;
+    grid-row-end: three;
+}
+
+.box-product-button{
+    
+    height: 50px;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: [start] 50px [two] auto [three] 50px [end];
+    grid-template-rows: [start] auto [end];
+
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: three;
+    grid-row-end: end;        
+}
+
+.plus{
+
+    font-weight: bold;
+    color: white;
+    background-color: #e64747;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: start;
+    grid-row-end: end;        
+}
+
+.plus-image{
+
+    display: none;
+}
+
+.plus-string{
+
+    display: block;
+}
+
+.plus:hover{
+
+    background-color: #c97777;
+}
+
+.plus:active{
+
+    background-color: #ad1919;
+}
+
+.short{
+
+    border-radius: 10px 20px 20px 10px;
+
+    grid-column-start: three;
+    grid-column-end: end;
+    grid-row-start: start;
+    grid-row-end: end;        
+}
+
+.quantity{
+
+    /*background-color: #efefef;*/
+    font-size: 18px;
+    font-weight: bold;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    grid-column-start: two;
+    grid-column-end: three;
+    grid-row-start: start;
+    grid-row-end: end;       
+}
+
+.minus{
+
+    color: white;
+    background-color: #e64747;
+    border-radius: 20px 10px 10px 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    grid-column-start: start;
+    grid-column-end: two;
+    grid-row-start: start;
+    grid-row-end: end;       
+}
+
+.box-product-button-show{
+
+    display: flex;    
+}

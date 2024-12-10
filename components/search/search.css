@@ -1,32 +1,17 @@
 .main-container{
+
         display: flex;
         justify-content: center;
-        background-color:rgb(242, 238, 247);
-        padding-left: 20px;
-        padding-right: 20px;
+        padding: 20px;
 }
 
 .box-catalog{
 
-        width: 100%;
-        margin-top: 50px;
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
+        align-items: start;
         gap: 20px;
-        background-color:rgb(242, 238, 247);
-}       
-
-.box-product{
-
-        height: 250px;
-        width: 225px;
-        border-radius: 6px 6px 6px 6px;
-        background-color:rgb(253, 254, 255);
-        box-shadow: -1px 2px 42px -48px rgba(0,0,0,0.75);
-        z-index: 0;
 }
-
 
 @media only screen and (max-width: 1490px) {
 
@@ -68,8 +53,7 @@
 
         .main-container{
 
-                padding-left: 10px;
-                padding-right: 10px;
+                padding: 10px;
         }
         .box-catalog{
                 

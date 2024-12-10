@@ -1,13 +1,3 @@
-menu panel
-
- - añadir secciones y categorías
-
-
-DEPARTAMENTOS
-
-- frutas y verduras
-- mascotas
-
 
 SERVICIOS
 
@@ -16,9 +6,11 @@ pago con tarjeta y transferencia
 entrega a domicilio por sitio web
 
 
-
-diseñar pagina de detalles del productos
+diseñar  pagina de ajustes ye información del usuario
 diseñar pagina de carrito de compras
+diseñar pagian de carrito de compras
+# considerar diseñar pagina de favoritos y productos marcados de tienda
+
 
 crear sistema de busqueda
 
@@ -30,6 +22,17 @@ integrar sistema de filtrado de productos
 - departamentos
 - secciones
 - apartados
+
+
+bootstrap carousel para slideshow
+
+
+
+crear arreglo antes de subir productos de carrito a la base de datos
+comprobar si el rpodcuto del carrito esta disponible
+
+reconsiderar archivo "insert.php" para adición de productos
+
 
 
 
@@ -55,3 +58,6 @@ SECURITY
 
 
 
+
+
+checkout git
