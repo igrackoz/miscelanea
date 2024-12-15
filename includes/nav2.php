@@ -1,4 +1,4 @@
-<div class="cool-navbar" id="cool-navbar" style="z-index: 999;">
+<div class="cool-navbar red" id="cool-navbar" style="z-index: 999;">
     <div class="start-search" id="start-search"></div>
     <a href="../billboard/billboard.php" class="cool-elements">
         <img src="../../images/house-door.svg">
@@ -16,7 +16,7 @@
             <img id="search-image" src="../../images/search.svg">
         </div>
     </div>
-    <form action="../search/search.php" method="GET" class="nav2-form">
+    <form action="../../includes/search.php" method="GET" class="nav2-form">
         <div class="entry" id="entry">
             <input type="text" class="cool-search" name="cool-search" id="cool-search" placeholder="¿Qué Buscas?">
         </div>
@@ -68,6 +68,9 @@
 </div>
 
 <script>
+
+/*  OCULTA EL NAVEGADOR AL BAJAR AL FONDO DE LA PAGINA */
+
 /*
 const coolnav = document.getElementById('cool-navbar');
 let lastScrollTop = 0;

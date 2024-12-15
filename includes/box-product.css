@@ -28,6 +28,7 @@
 
 .box-product-name{
 
+    height: 85px;
     font-size: 18px;
     grid-column-start: start;
     grid-column-end: end;
@@ -66,7 +67,6 @@
 
     font-weight: bold;
     color: white;
-    background-color: #e64747;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -110,12 +110,12 @@
 
 .quantity{
 
-    /*background-color: #efefef;*/
     font-size: 18px;
     font-weight: bold;
     display: none;
     align-items: center;
     justify-content: center;
+
     grid-column-start: two;
     grid-column-end: three;
     grid-row-start: start;
@@ -125,11 +125,11 @@
 .minus{
 
     color: white;
-    background-color: #e64747;
     border-radius: 20px 10px 10px 20px;
     display: none;
     align-items: center;
     justify-content: center;
+    
     grid-column-start: start;
     grid-column-end: two;
     grid-row-start: start;

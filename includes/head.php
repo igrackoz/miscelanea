@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../../main.css">
-    <link rel="stylesheet" href="../../components/search/search.css">
+    <link rel="stylesheet" href="../../components/result/result.css">
     <link rel="stylesheet" href="../../components/segment/segment.css">
     <link rel="stylesheet" href="../../components/cart/cart.css">
+    <link rel="stylesheet" href="../../components/account/account.css">
     <link rel="stylesheet" href="../../components/billboard/billboard.css">
     <link rel="stylesheet" href="../../dev/dev.css">
     <link rel="stylesheet" href="../../includes/contact.css">

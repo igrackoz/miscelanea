@@ -49,7 +49,7 @@ mysqli_close($Conn);
 
                 <div class="box-product" class="box-dep" id="<?= $row2['product_id'] ?>">
                     <div class="box-product-image">
-                        <img style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/carnes_procesadas/<?= $row2['product_image'] ?>">
+                        <img style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= htmlspecialchars($departmentName) ?>/<?= $row2['product_image'] ?>">
                     </div>
                     <div class="box-product-name">
                         <?= $row2['product_description'] ?>
@@ -58,11 +58,11 @@ mysqli_close($Conn);
                         <?= "$   ". $row2['product_price'] ?>
                     </div>
                     <div class="box-product-button">
-                        <div class="minus" onclick="remove(<?= $row2['product_id'] ?>, 1)">
+                        <div class="minus red" onclick="remove(<?= $row2['product_id'] . ',\'' . $row2['product_price'] . '\'' ?>, 1)">
                             <img src="../../images/minus.svg" alt="">
                         </div>
                         <div class="quantity" id="cantidad<?= $row2['product_id'] ?>"></div>
-                        <div class="plus" id="letrero<?= $row2['product_id'] ?>" onclick="add(<?= $row2['product_id'] . ',\'' . addslashes($row2['product_description']) . '\',\'' . $row2['product_price'] . '\',\'' . addslashes($row2['product_image']) . '\'' ?>, 1)">
+                        <div class="plus red" id="letrero<?= $row2['product_id'] ?>" onclick="add(<?= $row2['product_id'] . ',\'' . addslashes($row2['product_description']) . '\',\''. htmlspecialchars($departmentName) .'\',\'' . $row2['product_price'] . '\',\'' . addslashes($row2['product_image']) . '\'' ?>, 1)">
                             <div class="plus-string">Añadir</div>
                             <img src="../../images/plus.svg" class="plus-image">
                         </div>
@@ -80,6 +80,7 @@ mysqli_close($Conn);
         <div style="font-size: 20px; height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
             Página 1
         </div>
+    </div>
 </body>
 </html>
 
@@ -132,33 +133,4 @@ function fadeAppear(){
 window.addEventListener('scroll', fadeAppear);
 window.addEventListener('load', fadeAppear);
 
-/*
-function add(userId,productId){
-
-    // Datos que deseas enviar (pueden ser dinámicos)
-    const data = {
-        quantity: 1,    // Ejemplo de cantidad
-        userId: userId,      // Ejemplo de ID de usuario
-        productId: productId,   // Ejemplo de ID de producto
-    };
-
-    // Envía una solicitud AJAX al servidor
-    fetch('../../includes/insert.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), // Convierte el objeto en una cadena JSON
-    })
-    .then(response => response.json()) // Espera una respuesta en formato JSON
-    .then(result => {
-        if (result.success) {
-            // alert('¡Datos insertados con éxito!');
-        } else {
-            // alert('Error al insertar datos: ' + result.error);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-*/
 </script>

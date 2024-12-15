@@ -7,12 +7,9 @@ entrega a domicilio por sitio web
 
 
 diseñar  pagina de ajustes ye información del usuario
-diseñar pagina de carrito de compras
-diseñar pagian de carrito de compras
+
 # considerar diseñar pagina de favoritos y productos marcados de tienda
 
-
-crear sistema de busqueda
 
 
 integrar sistema de filtrado de productos
@@ -31,7 +28,53 @@ bootstrap carousel para slideshow
 crear arreglo antes de subir productos de carrito a la base de datos
 comprobar si el rpodcuto del carrito esta disponible
 
-reconsiderar archivo "insert.php" para adición de productos
+
+- reconsiderar archivo "insert.php" para adición de productos
+
+
+
+
+
+BÚSQUEDA
+
+# considerar ordenar busqueda por posión de cadena de referencia
+# mayor número de similitudes en cadena dentro de la descripcion primero
+# implementar uso de SOUNDEX para busquedas de fonética similar
+
+LÓGICA DE BÚSQUEDA
+-------------------------------------------
+Comandos: 
+    - Like
+    - Soundex
+
+Orden de busqueda
+
+    // búsqueda de input por segmentos
+
+        # descomponer cadena de busqueda en un arreglo de elementos
+
+            condiciones: segmento.length > 2 || segmento != (los, con)
+
+                sí - integrar segmento al arreglo
+                no - omitir como conector de palabras (el, la, los, de, con, y).
+        
+        # guardar arreglo de la cadena de entrada en una variable php
+        # meter en un ciclo cada elemento (foreach)
+
+            # obtener columna de la bd (SELECT product_description products)
+            # descomponer en un arreglo el dato y guardarlo
+
+            # Comando SOUNDEX 
+
+                -   Comparar en un foreach anidado cada elemeneto
+                    de la entrada en el arreglo con cada elemeneto
+                    del dato de la columna en el arreglo
+
+                #   lanzar un return con la cadena corregida
+
+            # Comando LIKE
+
+                -   
 
 
 
@@ -46,7 +89,7 @@ BASE DE DATOS
     tabla de proveedores
     crear sistema de costo variable de productos prioritario
 
-
+symfony, laravel UI/UX
 
 
 
@@ -57,7 +100,7 @@ SECURITY
 - implementar cifrado de datos personales
 
 
-
+- crear roles de permisos de usuario
 
 
 checkout git

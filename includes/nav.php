@@ -1,4 +1,4 @@
-<div class="bar sticky-top">
+<div class="bar sticky-top red">
     <div class="menu-panel" id="menu-panel">
         <div class="close-menu" id="close-menu">
             <img src="../../images/arrow-left-short.svg">
@@ -106,7 +106,7 @@
             <h1 style=" font-size: 19px; font-weight: bold; color:white;">Miscelana</h1>
         </div>
     </a>
-        <form action="../search/search.php" method="GET" class="search">
+        <form action="../../includes/search.php" method="GET" class="search">
             <input type="text" name="cool-search" style="height: 60px; width: 90%; padding-left: 18px; padding-bottom: 5px; border: none; border-radius: 30px;" placeholder="¿Qué buscas?">
         </form>
     <div class="space">
@@ -192,7 +192,7 @@
     <div class="zoom" id="zoom" onclick="toggleAccordionSearch(event)">
         <img style="height: 25px; width: 25px; user-select: none; pointer-events: none;" src="../../images/zoom.png">
     </div>
-    <form action="../search/search.php" method="GET" class="zoom-panel" id="zoom-panel">
+    <form action="../../includes/search.php" method="GET" class="zoom-panel" id="zoom-panel">
         <input type="text" id="zoom-search" name="cool-search" style="height: 80%; width: 98%; padding-left: 18px; padding-bottom: 5px; border: none; border-radius: 30px;" placeholder="¿Qué buscas?">
     </form>
 </div>

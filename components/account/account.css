@@ -1,0 +1,19 @@
+.cart-redirect{
+
+    padding: 5px;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+.inner-div{
+
+    height: 100%;
+    
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, rgba(2,0,36,0) 0%, #ff7575 100%);
+}.inner-div:active{
+
+    background: linear-gradient(180deg, rgba(2,0,36,0) 80%, #ff7575 100%);
+}

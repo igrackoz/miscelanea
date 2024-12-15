@@ -6,7 +6,6 @@
     display: grid;
     grid-template-columns: [start] 25mm [two] 100px [three] 600px [four] 1fr [five] auto [six] 25mm [end];
     grid-template-rows: [start] 100% [end];
-    background-color: #e64747;
     z-index:10;
 }
 

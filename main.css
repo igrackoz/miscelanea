@@ -2,6 +2,12 @@ body,html{
     padding: 0 !important;
     margin: 0  !important;
     background-color:rgb(242, 238, 247) !important;
+    
 }
 
-*{outline: 0px solid black;}
+*{outline: 0px solid black;box-sizing: border-box;}
+
+.red{
+
+    background-color: #e64747;
+}

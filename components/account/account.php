@@ -21,13 +21,120 @@ mysqli_close($Conn);
         include $bp."contact.php";
         include "../../dev/dev.php";
     ?>
+    <div style="height: 50px;"></div>
+    <div style="height: 150px; width: 100%; margin-bottom: 30px; display: flex; gap: 20px; flex-direction: column; align-items: center; justify-content:space-around;">
+        <div style="height: 100px; width: 100px;">
+        
+        <div>
+            <div id="letter-image" style="overflow: hidden;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                background-color: hsl(<?= $color ?>, 40%, 80%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                color: hsl(<?= $color ?>, 40%, 40%);
+                font-size: 40px;">
 
-    <div style="height: 150px; width: 100%; display: flex; align-items: center; justify-content: center;">
-        <div>imagen</div>
-        <div>nombre</div>
-        <div>salir</div>
+                <?php 
+
+                $firstname_letter = strtoupper(substr($nombre, 0, 1));
+                $lastname_letter = strtoupper(substr($apellido, 0, 1));
+
+                echo $firstname_letter.''.$lastname_letter;
+                
+                ?>
+
+            </div>
+        </div>
+
+        </div>
+        <div><?= $nombre.' '.$apellido ?></div>
     </div>
-    <div style="height: 100px;">artículos favoritos</div>
-    <div style="height: 100px;">carrito</div>
+
+    <style>
+
+        .address{
+
+            display: flex;
+            padding-left: 10px;
+            color: #555;
+            height: 60px;
+            display: flex;
+            align-items:center;
+            justify-content: start;
+        }
+
+    </style>
+
+    <div style="margin-left: 10px; margin-right: 10px; border-radius: 15px; background-color: white;">
+        <div class="address">
+            <div>Correo electrónico</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+        </div>
+        <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
+        <div class="address">
+            <div>Dirección</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+        </div>
+        <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
+        <div class="address">
+            <div>Número</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+        </div>
+    </div>
+    <a href="../../components/cart/cart.php">
+        <div class="cart-redirect red">
+            <div class="inner-div">
+
+            </div>
+        </div>
+    </a>
+    <div style="height: 100px; display: flex; justify-content: center;">artículos favoritos</div>
+    <div style="height: 100px;"></div>
+    <div style="display: flex; justify-content: center; font-size: 20px;">
+        Cerrar Sesión
+    </div>
 </body>
 </html>
+
+<script>
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    let cantidad = 0;
+    let subtotal = 0;
+    const cartArray = JSON.parse(sessionStorage.getItem("carrito"));
+    const innerDiv = document.querySelector('.inner-div');
+
+    if (cartArray) {
+        
+        cartArray.forEach(elemento => {
+
+        cantidad += elemento.productQuantity;
+        subtotal += parseFloat(elemento.productQuantity*elemento.productPrice);
+        });
+    }
+
+            
+    const div1 = document.createElement('div');
+    div1.style = 'font-size: 30px; color: white;';
+    div1.innerHTML = 'Carrito de Compras';
+    innerDiv.appendChild(div1);
+
+    const div2 = document.createElement('div');
+    div2.style.color = 'white';
+    div2.innerHTML = cantidad + ' productos';
+    innerDiv.appendChild(div2);
+
+    const div3 = document.createElement('div');
+    div3.style = 'font-size: 40px; right: 0; bottom: 0; color: white;';
+    innerDiv.appendChild(div3);
+
+    const strong = document.createElement('strong');
+    strong.innerHTML = '$ ' + subtotal + '.00';
+    div3.appendChild(strong);
+});  
+
+</script>
