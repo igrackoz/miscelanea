@@ -15,7 +15,7 @@ if (sessionStorage.getItem('carrito')) {
 function add(productId, productDescription, productDepartment, productPrice, productImage, productQuantity) {
 
     stocked = false;
-    const quantityMinusDiv = document.querySelectorAll('.cart-quantity-minus'); 
+    const quantityMinusDiv = document.querySelectorAll('.cart-quantity-minus');
 
     for (let i = 0; i<sesionArray.length; i++) {
 
@@ -185,6 +185,28 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
 
     if (document.querySelector('.cart-value-number')) {
         
+        const noPaymentContainer = document.querySelector('.nopayment-container');
+        const paymentContainer = document.querySelector('.payment-container');
+
+        const exactoValue = document.getElementById("exactoValue");
+        
+
+        var input1 = document.getElementById('efectivo');
+        var radio1 = document.getElementById('radio1');
+        var radio2 = document.getElementById('radio2');
+        var efectivoSeparator = document.querySelector('.efectivo-separator');
+        var exacto = document.getElementById('exacto');
+        var regreso = document.getElementById('regreso');
+
+        var input2 = document.getElementById('tarjeta');
+
+        var input3 = document.getElementById('transferencia');
+
+        var div1 = document.getElementById('div1');
+        var div2 = document.getElementById('div2');
+        var div3 = document.getElementById('div3');
+
+
         const cartValueNumber = document.querySelector('.cart-value-number');
         let contenidoTexto = cartValueNumber.textContent;
         contenidoTexto = contenidoTexto.substring(2);
@@ -196,5 +218,57 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
         contenidoTexto += isAdd ? parseFloat(productPrice) : -parseFloat(productPrice);
 
         cartValueNumber.textContent = '$ ' + contenidoTexto + '.00';
+
+        if (exactoValue) {
+
+            exactoValue.textContent = cartValueNumber.textContent;
+        }
+        
+        if (productPrice*productQuantity >= 50) {
+
+            if (noPaymentContainer) {
+                noPaymentContainer.style.display = 'none';
+            }
+            paymentContainer.style.display = 'block';
+        } else {
+            noPaymentContainer.style.display = 'block';
+            paymentContainer.style.display = 'none';
+
+            input1.checked = false;
+            input2.checked = false;
+            input3.checked = false;
+
+            radio1.checked = false;
+            cambio.style.display = 'none';
+            radio2.checked = false;
+            efectivoSeparator.style.display = 'none';
+            exacto.style.display = 'none';
+            regreso.style.display = 'none';
+            
+            div1.style.display = 'none';
+            div2.style.display = 'none';
+            div3.style.display = 'none';
+        }
+    }
+
+    var input2 = document.getElementById('tarjeta'); 
+    var total_view = document.getElementById('div21Text2'); 
+    var commission = document.getElementById('div22Text2'); 
+    const valueNumberDiv = document.querySelector('.cart-value-number');
+
+    if (input2) {
+        
+        if (input2.checked) {
+
+            total = parseFloat(valueNumberDiv.textContent.substring(2)) - com;
+            console.log(total);
+            com = Math.ceil(total / 20);
+            console.log(com);
+
+            total_view.textContent = "$ " + total + ".00";
+            commission.textContent = "+ $ " + com + ".00";
+
+            valueNumberDiv.textContent = "$ " + (total + com) + ".00";
+        }
     }
 }

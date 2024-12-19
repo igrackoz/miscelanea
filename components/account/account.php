@@ -7,8 +7,9 @@ include $bp."dbconnect.php";
 
 $userid = $_GET['userid'];
 
-$query2 = "SELECT * FROM users WHERE user_id = ".$userid;
-$dataset2 = mysqli_query($Conn,$query2);
+$query = "SELECT user_id, user_email, user_street, user_num_ext, user_phone FROM users WHERE user_id = ".$userid;
+$dataset = mysqli_query($Conn,$query);
+$row = mysqli_fetch_assoc($dataset);
 
 mysqli_close($Conn);
 
@@ -68,20 +69,28 @@ mysqli_close($Conn);
         }
 
     </style>
-
-    <div style="margin-left: 10px; margin-right: 10px; border-radius: 15px; background-color: white;">
+    
+    <div style="margin-left: 10px; margin-right: 10px; border-radius: 10px; background-color: white; box-shadow: -1px 2px 42px -48px rgba(0,0,0,0.75);">
         <div class="address">
-            <div>Correo electrónico</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_email'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
         </div>
         <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
         <div class="address">
-            <div>Dirección</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_street'].", #".$row['user_num_ext'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
         </div>
         <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
         <div class="address">
-            <div>Número</div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_phone'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
         </div>
     </div>
+
+    <div style="display: flex; border-radius: 10px; gap: 10px; padding: 20px; justify-content: center; align-items: start; color: white; background-color:rgb(17, 94, 194); width: auto; margin-left: 10px; margin-right: 10px; margin-top: 10px;">
+        <img style="margin-top: 4px;" src="../../images/exclamation-circle.svg">
+        <div>
+            Sus datos de dirección serán usados con la finalidad de otorgar un servicio de entrega a domicilio óptimo y eficiente.
+        </div>
+    </div>
+
     <a href="../../components/cart/cart.php">
         <div class="cart-redirect red">
             <div class="inner-div">
@@ -98,8 +107,6 @@ mysqli_close($Conn);
 </html>
 
 <script>
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
 

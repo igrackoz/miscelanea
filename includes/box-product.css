@@ -1,6 +1,7 @@
 .box-product{
 
     width: auto;
+    max-width: 225px;
     display: grid;
     overflow: hidden;
     grid-template-columns: [start] auto [one] auto [end];

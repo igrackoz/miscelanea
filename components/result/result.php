@@ -96,3 +96,41 @@ while ($row = mysqli_fetch_assoc($dataset)) {
 
 </body>
 </html>
+
+<script>
+
+const boxCatalog = document.querySelector('.box-catalog');
+const boxProduct = document.querySelector('.box-product');
+
+function adjustHeight() {
+
+    const bar = document.querySelector('.bar');
+    const coolNavbar = document.querySelector('.cool-navbar');
+    const productLowPadding = document.querySelector('.product-low-padding');
+    const boxProduct = document.querySelector('.box-product');
+    
+    const estilo = getComputedStyle(boxCatalog);
+    const gap = parseFloat(estilo.gap);
+    
+    const boxProductHeight = parseFloat(getComputedStyle(boxProduct).height);
+    let lessHeight;
+
+    if (coolNavbar) {lessHeight = boxProductHeight + (gap * 2);}
+
+    else {
+        const barHeight = parseFloat(getComputedStyle(bar).height);
+        lessHeight = boxProductHeight + barHeight + (gap * 2);
+    }
+    
+    const totalHeight = window.innerHeight - lessHeight;
+    
+    productLowPadding.style.height = totalHeight + "px";
+}
+
+
+
+window.addEventListener('resize', adjustHeight);
+window.addEventListener('scroll', adjustHeight);
+window.addEventListener('load', adjustHeight);
+
+</script>

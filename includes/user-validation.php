@@ -8,6 +8,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['nombre']) && isset($_SESSION['apel
     $nombre = $_SESSION['nombre'];
     $apellido = $_SESSION['apellido'];
     $color = $_SESSION['color'];
+
 } else { }
 
 ?>

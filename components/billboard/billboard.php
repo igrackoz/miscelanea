@@ -300,4 +300,18 @@ function resetInterval() {
 
 startInterval();
 
+
+
+window.addEventListener('DOMContentLoaded', function () {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    let user = urlParams.get('user'); 
+
+    if (user) {
+        sessionStorage.setItem('user', user);
+    }
+});
+
+
 </script>

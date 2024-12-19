@@ -7,10 +7,20 @@
 
 .box-catalog{
 
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         align-items: start;
         gap: 20px;
+}
+
+@media only screen and (min-width: 1490px) {
+
+        .box-product{
+
+                flex: 0 1 calc(16.66% - 16.6px);
+                box-sizing: border-box;
+        }
 }
 
 @media only screen and (max-width: 1490px) {

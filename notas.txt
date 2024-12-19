@@ -104,3 +104,14 @@ SECURITY
 
 
 checkout git
+
+
+
+
+analizar la relación del tamaño de las imagenes de los productos con el diseño responsivo
+
+
+------------------------------
+buzón de sugerencias 
+--------------------------------
+

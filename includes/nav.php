@@ -13,7 +13,7 @@
 
             <a href="../account/account.php?userid=<?= $id ?>" class="user-element" id="menu-element">
                 <div id="menu-img">
-                    <div id="letter-image" style="overflow: hidden;
+                    <div class="profile-pciture" id="letter-image" style="overflow: hidden;
                         height: 40px;
                         width: 40px;
                         border-radius: 50%;
@@ -117,7 +117,7 @@
 
             <a href="../account/account.php?userid=<?= $id ?>" class="box-login" style="color:white;" onclick="toggleAccordion(event)">
 
-                <div style="overflow: hidden;
+                <div class="profile-pciture" style="overflow: hidden;
                     height: 40px;
                     width: 40px;
                     border-radius: 50%;

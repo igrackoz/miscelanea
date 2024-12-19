@@ -32,8 +32,8 @@
 
     <?php if (isset($id) && isset($nombre) && isset($apellido) && isset($color)){ ?>
 
-        <a href="../account/account.php?userid=<?= $id ?>" class="cool-elements">
-            <div style="overflow: hidden;
+        <a href="../account/account.php?userid=<?= $id ?>"  class="cool-elements">
+            <div class="profile-picture" style="overflow: hidden;
             height: 28px;
             width: 28px;
             border-radius: 50%;
