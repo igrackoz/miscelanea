@@ -2,14 +2,16 @@
 
 global $Conn;
 require_once "../../includes/dbconnect.php";
-
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-
-
 $query = "SELECT * FROM users WHERE user_email = '$email'";
 $dataset = mysqli_query($Conn, $query);
+$query = "SELECT * FROM users WHERE user_email = ?";
+$stmt = mysqli_prepare($Conn, $query);
+mysqli_stmt_bind_param($stmt, "s", $email);
+mysqli_stmt_execute($stmt);
+$dataset = mysqli_stmt_get_result($stmt);
 
 if($dataset){
     
