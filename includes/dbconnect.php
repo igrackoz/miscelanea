@@ -14,7 +14,7 @@ function loadEnv($file)
 // Cargar las variables de entorno desde el archivo .env
 loadEnv(__DIR__ . '/.env');
 
-// Usar las variables de entorno para la conexión
+// Usar las variables de entorno para la conexión.
 $servername = getenv('DB_SERVER');
 $usr = getenv('DB_USER');
 $pwd = getenv('DB_PASSWORD');
