@@ -183,12 +183,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function cartUpdate(productId,productPrice,productQuantity,isAdd) { 
 
+    const valueNumberDiv = document.querySelector('.cart-value-number');
+
     if (document.querySelector('.cart-value-number')) {
         
         const noPaymentContainer = document.querySelector('.nopayment-container');
         const paymentContainer = document.querySelector('.payment-container');
 
         const exactoValue = document.getElementById("exactoValue");
+
+        const user = document.querySelector(".profile-picture");
         
 
         var input1 = document.getElementById('efectivo');
@@ -211,11 +215,24 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
         let contenidoTexto = cartValueNumber.textContent;
         contenidoTexto = contenidoTexto.substring(2);
         contenidoTexto = parseFloat(contenidoTexto);
+        
+        var input2 = document.getElementById('tarjeta'); 
+        var total_view = document.getElementById('div21Text2'); 
+        var commission = document.getElementById('div22Text2'); 
 
         const cartFullPrice = document.getElementById('full' + productId);
         cartFullPrice.textContent = '$ ' + productPrice*productQuantity + '.00';
 
         contenidoTexto += isAdd ? parseFloat(productPrice) : -parseFloat(productPrice);
+
+        const ocultaTexto = document.getElementById("ocultaTexto");
+        let texto = ocultaTexto.textContent;
+        let numero = parseFloat(texto.split(" ")[0]);
+
+        if (isAdd) {numero += 1;}
+        else {numero -= 1;}
+         
+        ocultaTexto.textContent = numero + " productos";   
 
         cartValueNumber.textContent = '$ ' + contenidoTexto + '.00';
 
@@ -223,47 +240,45 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
 
             exactoValue.textContent = cartValueNumber.textContent;
         }
-        
-        if (productPrice*productQuantity >= 50) {
 
-            if (noPaymentContainer) {
-                noPaymentContainer.style.display = 'none';
-            }
-            paymentContainer.style.display = 'block';
-        } else {
-            noPaymentContainer.style.display = 'block';
-            paymentContainer.style.display = 'none';
-
-            input1.checked = false;
-            input2.checked = false;
-            input3.checked = false;
-
-            radio1.checked = false;
-            cambio.style.display = 'none';
-            radio2.checked = false;
-            efectivoSeparator.style.display = 'none';
-            exacto.style.display = 'none';
-            regreso.style.display = 'none';
+        if (user) {
             
-            div1.style.display = 'none';
-            div2.style.display = 'none';
-            div3.style.display = 'none';
+            total = parseFloat(valueNumberDiv.textContent.substring(2)) - com;
+            
+            if (total >= 50) {
+
+                noPaymentContainer.style.display = 'none';
+                paymentContainer.style.display = 'block';
+            } else {
+
+                noPaymentContainer.style.display = 'block';
+                paymentContainer.style.display = 'none';
+
+                input1.checked = false;
+                input2.checked = false;
+                input3.checked = false;
+
+                radio1.checked = false;
+                cambio.style.display = 'none';
+                radio2.checked = false;
+                efectivoSeparator.style.display = 'none';
+                exacto.style.display = 'none';
+                regreso.style.display = 'none';
+                
+                div1.style.display = 'none';
+                div2.style.display = 'none';
+                div3.style.display = 'none';
+            }
         }
     }
 
-    var input2 = document.getElementById('tarjeta'); 
-    var total_view = document.getElementById('div21Text2'); 
-    var commission = document.getElementById('div22Text2'); 
-    const valueNumberDiv = document.querySelector('.cart-value-number');
 
     if (input2) {
         
         if (input2.checked) {
 
             total = parseFloat(valueNumberDiv.textContent.substring(2)) - com;
-            console.log(total);
             com = Math.ceil(total / 20);
-            console.log(com);
 
             total_view.textContent = "$ " + total + ".00";
             commission.textContent = "+ $ " + com + ".00";
