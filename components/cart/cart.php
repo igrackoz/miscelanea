@@ -44,8 +44,6 @@ mysqli_close($Conn);
 
         <div class="cart-elements"></div>
 
-        <div style="height: 400px;" id="cart-redirect">
-
             <?php if (isset($nombre) && isset($apellido)){ ?>
                 
                 <div id="cartalert" style="
@@ -66,41 +64,105 @@ mysqli_close($Conn);
                     <div>Completa el formulario!</div>
                 </div>
 
-                <div class="cart-button red" style="height: 70px;
+                <div class="cart-button" style="height: 70px;
                     color: white;
+                    background-color: lightgray;
                     display: flex;
+                    margin-bottom: 10px;
                     justify-content: center;
                     align-items: center;
-                    border-radius: 10px;">
+                    border-radius: 10px;
+                    z-index: 10;">
 
-                    <div style="font-size: 22px;">Solicitar pedido</div>
+                    <div style="font-size: 22px;">Visualizar ticket</div>
 
                 </div>
-                <!-- onclick="shipping()"
-                <div class="cart-button red" onclick="toggleDropdown(this)">
-                    <div>Realizar pedido</div>
-                    <div>
-                        <img src="../../images/down_arrow.svg">
+                
+                <div id="ticket" style="
+                    width: 100%;
+                    height: 0;
+                    background-color: white;
+                    font-family: 'Consolas', monospace;
+                    overflow: hidden;
+                    padding: 10px;
+                    color: gray;
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
+                    z-index: 9;
+                    transition: height 0.5s ease;
+                    
+                    "><div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+                        TICKET DE COMPRA<br>
+                        <br>
+                        Empresa: Tienda El Rincón Feliz<br>
+                        RFC: TRE8901234B56<br>
+                        Dirección: Calle Ficticia 123, Colonia Inventada, Localidad: Villa Imaginaria, Estado: Fictilandia<br>
+                        Teléfono: 01 800 123 4567<br>
+                        Fecha: 21 de diciembre de 2024<br>
+                        Hora: 14:35:20<br>
+                        Número de ticket: 000123456789<br>
+                        Forma de pago: Tarjeta de débito<br>
+                        Localidad: Villa Imaginaria<br>
+                        </div>
+                        PRODUCTOS<br>
+                        <br>
+                        Camiseta Estampada<br>
+                        Cantidad: 2<br>
+                        Precio Unitario: $150.00<br>
+                        Total: $300.00<br>
+                        <br>
+                        Pantalón Deportivo<br>
+                        Cantidad: 1<br>
+                        Precio Unitario: $450.00<br>
+                        Total: $450.00<br>
+                        <br>
+                        Taza Personalizada<br>
+                        Cantidad: 3<br>
+                        Precio Unitario: $80.00<br>
+                        Total: $240.00<br>
+                        <br>
+                        Mochila de Viaje<br>
+                        Cantidad: 1<br>
+                        Precio Unitario: $750.00<br>
+                        Total: $750.00<br>
+                        <br>
+                        Calcetines Deportivos<br>
+                        Cantidad: 5<br>
+                        Precio Unitario: $50.00<br>
+                        Total: $250.00<br>
+                        <br>
+                        Subtotal: $1,990.00v
+                        IVA (16%): $318.40<br>
+                        Total a Pagar: $2,308.40<br>
+                        <br>
+                        <div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+                        Gracias por tu compra.<br>
+                        ¡Vuelve pronto!<br><br><br><br><br>
+                        </div>
+                    <div class="ticket-button red" style="height: 70px;
+                        color: white;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 10px;
+                        z-index: 10;">
+                        <div style="font-size: 22px;">Solicitar pedido</div>
+
                     </div>
                 </div>
-                <div class="dropdown">
-                    <a href="#">Forma de pago</a>
-                    <a href="#">Dirección</a>
-                    <div href="#" style="background-color: red; height: 50px; margin: 10pxadmin ; display: flex; align-items: center; justify-content: center; height: 100%;"><div style="border-radius: 10px;
-                        color: white;">Confirmar</div></div>
-                </div>-->
 
             <?php } else { ?>
 
-                <div style="padding-top: 50px; padding-bottom: 50px; font-size: 25px; text-align: center; display: flex; align-items: center; justify-content: center;">
-                    <div style="width: 80%; font-weight: bold; color: #666;">Si deseas recibir esta compra a domicilio inicia sesión o registrate</div>
-                </div>
                 <a href="../login/login.php" class="cart-button">
                     Iniciar Sesión
                 </a>
 
             <?php }?>
 
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto; aspect-ratio: 1 / 1;">
+            <img style="height: 70%; width: 70%;" src="../../images/christmas_tree.png">
         </div>
 
     </div>
@@ -157,17 +219,8 @@ function mostrarAlerta() {
                 cambioInput.style.borderColor = "#ff8a95";
                 cambioInput.focus();
                 alertaDespliegue();
-            } else {
-
-                shipping();
             }
-        } else {
-            
-            shipping();
         }
-    } else {
-
-        shipping();
     }
 }
 
@@ -180,8 +233,18 @@ function alertaDespliegue() {
     }, 3000);
 }
 
+const ticket = document.getElementById("ticket");
+
+cartButton.addEventListener('click', () => {
+    if (ticket.style.height === '0px' || !ticket.style.height) {
+        ticket.style.height = 'auto'; // Altura expandida
+    } else {
+        ticket.style.height = '0px'; // Colapsar
+    }
+});
+
 // Agregar el evento de clic al botón
-cartButton.addEventListener('click', mostrarAlerta);
+//cartButton.addEventListener('click', mostrarAlerta);
 
 function toggleDropdown(button) {
 
@@ -191,6 +254,8 @@ function toggleDropdown(button) {
 let total = 0;
 let totalProducts = 0;
 let com = 0;
+let first = false;
+let desplegado = true;
 let cambioVal = 0;
 
 const coolNavbar = document.getElementById('cool-navbar');
@@ -205,17 +270,89 @@ function shipping() {
         { id: 1, name: "Producto A", quantity: 2, price: 100 },
         { id: 2, name: "Producto B", quantity: 1, price: 200 },
     ];
-    
+
+    const extraItems = [
+        { id: 3, name: "Producto C", quantity: 5, price: 50 },
+        { id: 4, name: "Producto D", quantity: 3, price: 75 },
+    ];
+
     const productsJSON = JSON.stringify(products);
-    
-    // Redireccionar a un archivo PHP, pasando el arreglo como parámetro
-    window.location.href = `enviar_pedido.php?products=${encodeURIComponent(productsJSON)}`;
+    const extraItemsJSON = JSON.stringify(extraItems);
+
+    // Redireccionar a un archivo PHP, pasando los dos arreglos como parámetros
+    window.location.href = `enviar_pedido.php?products=${encodeURIComponent(productsJSON)}&extraItems=${encodeURIComponent(extraItemsJSON)}`;
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
 
+
     if (cartArray && cartArray.length > 0) { // Verificar si hay productos en el sessionStorage
 
+
+        // Al empezar a llenar el formulario se ocultan los productos y aparece un desplegable
+        // que muestra solo el número de productos
+        const ocultaProductos = document.createElement('div');
+        ocultaProductos.className = "ocultaProductos";
+        ocultaProductos.id = "ocultaProductos";
+        ocultaProductos.style = "padding: 15px 20px 15px 20px; height: 60px; display: flex; justify-content: space-between; align-items: center; border-radius: 10px; border: 1px solid #bbb; background-color: white; color: #777;";
+        ocultaProductos.addEventListener("click", () => {
+
+            const separatorDiv5 = document.getElementById("separatorDiv5");
+
+            cambioInsertar.style.display = 'flex';
+            cambioValueDiv.style.display = 'none';
+            cambioValue.textContent = "";
+            cambioInput.style.borderColor = "#ddd";
+            cambioInput.value = "";
+            
+            if (peso.classList.contains("on-currency")) {
+                
+                peso.style.backgroundColor = "#0D6EFD";
+            } else {
+                dolar.style.backgroundColor = "#0D6EFD";
+            }
+
+            com = 0;
+
+            cambio.style.display = 'none';
+            separatorDiv5.style.display = 'none';
+            divisaDiv.style.display = 'none';
+            radio2.checked = false;
+            validationMessage.style.display = 'none';
+
+            peso.style.pointerEvents = "auto";
+            dolar.style.pointerEvents = "auto";
+
+            desplegado = !desplegado;
+
+            const displayValue = desplegado ? "grid" : "none";
+            const rotationValue = desplegado ? "rotateZ(180deg)" : "rotateZ(0deg)";
+
+            ocultaIcono.style.transform = rotationValue;
+
+            document.querySelectorAll(".cart-product").forEach((cartProducts) => {
+                cartProducts.style.display = displayValue;
+            });
+            document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
+                separatorDiv.style.display = displayValue;
+            });
+        });
+        cartProductsContainer.appendChild(ocultaProductos);
+
+            const ocultaTexto = document.createElement("div");
+            ocultaTexto.className = "ocultaTexto";
+            ocultaTexto.id = "ocultaTexto";
+            ocultaTexto.style.fontSize = "22px";
+            ocultaProductos.appendChild(ocultaTexto);
+
+            const ocultaIcono = document.createElement("img");
+            ocultaIcono.src = '../../images/down_arrow_black.svg';
+            ocultaIcono.className = "ocultaIcono";
+            ocultaIcono.style.transform = "rotateZ(180deg)";
+            ocultaIcono.id = "ocultaIcono";
+            ocultaProductos.appendChild(ocultaIcono);
+        //
         // INSERCIÓN DE PRODUCTOS DEL CARRITO
         cartArray.forEach(elemento => {
 
@@ -307,84 +444,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             total += elemento.productPrice*elemento.productQuantity;
         });
+
+        ocultaTexto.textContent = totalProducts + " productos";
         
-        // Al empezar a llenar el formulario se ocultan los productos y aparece un desplegable
-        // que muestra solo el número de productos
-        const ocultaProductos = document.createElement('div');
-        ocultaProductos.className = "ocultaProductos";
-        ocultaProductos.id = "ocultaProductos";
-        ocultaProductos.style = "padding: 15px; height: 60px; display: none; justify-content: space-between; align-items: center; border-radius: 10px; background-color: #e64747; color: white ";
-        ocultaProductos.addEventListener("click", () => {
-
-            var div1 = document.getElementById('div1');
-            var div2 = document.getElementById('div2');
-            var div3 = document.getElementById('div3');
-
-            const separatorDiv5 = document.getElementById("separatorDiv5");
-            const efectivo = document.getElementById("efectivo");
-            efectivo.checked = false;
-                
-            cartButton.style.backgroundColor = "gray";
-            div1.style.display = 'none';
-
-            cambioInsertar.style.display = 'flex';
-            cambioValueDiv.style.display = 'none';
-            cambioValue.textContent = "";
-            cambioInput.style.borderColor = "#ddd";
-            cambioInput.value = "";
-            
-            if (peso.classList.contains("on-currency")) {
-                
-                peso.style.backgroundColor = "#0D6EFD";
-            } else {
-                dolar.style.backgroundColor = "#0D6EFD";
-            }
-
-            div3.style.display = 'none';
-            div2.style.display = 'none';
-
-            com = 0;
-
-            exacto.style.display = 'none';
-            radio1.checked = false;
-            cambio.style.display = 'none';
-            separatorDiv5.style.display = 'none';
-            divisaDiv.style.display = 'none';
-            radio2.checked = false;
-            efectivoSeparator.style.display = 'none';
-            regreso.style.display = 'none';
-            validationMessage.style.display = 'none';
-
-            peso.style.pointerEvents = "auto";
-            dolar.style.pointerEvents = "auto";
-
-            ocultaProductos.style.display = "none";
-            document.querySelectorAll(".cart-product").forEach((cartProducts) => {
-                cartProducts.style.display = "grid";
-            });
-            document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
-                separatorDiv.style.display = "grid";
-            });
-            
-        });
-        cartProductsContainer.appendChild(ocultaProductos);
-
-            const ocultaTexto = document.createElement("div");
-            ocultaTexto.className = "ocultaTexto";
-            ocultaTexto.id = "ocultaTexto";
-            ocultaTexto.style.fontSize = "22px";
-            ocultaTexto.textContent = totalProducts + " productos";
-            ocultaProductos.appendChild(ocultaTexto);
-
-            const ocultaIcono = document.createElement("img");
-            ocultaIcono.src = '../../images/down_arrow.svg';
-            ocultaIcono.className = "ocultaIcono";
-            ocultaIcono.id = "ocultaIcono";
-            ocultaProductos.appendChild(ocultaIcono);
-
-
-
-
         const user = document.querySelector(".profile-picture");
 
         if (user) { // USUARIO LOGEADO
@@ -518,17 +580,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         if (divId == 'div1') {
 
+                            cartButton.style.backgroundColor = "lightgray";
+                            cartButton.style.userSelect = "none";
+
                             valueNumberDiv.textContent = "$ " + total + ".00";
 
                             if (input1.checked) {
 
-                                ocultaProductos.style.display = "flex";
-                                document.querySelectorAll(".cart-product").forEach((cartProducts) => {
-                                    cartProducts.style.display = "none";
-                                });
-                                document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
-                                    separatorDiv.style.display = "none";
-                                });
+                                if (!first) {
+
+                                    ocultaIcono.style.transform = "rotateZ(0deg)";
+
+                                    ocultaProductos.style.display = "flex";
+                                    document.querySelectorAll(".cart-product").forEach((cartProducts) => {
+                                        cartProducts.style.display = "none";
+                                    });
+                                    document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
+                                        separatorDiv.style.display = "none";
+                                    });
+
+                                    first = true;
+                                }
 
                                 div1.style.display = 'block';
 
@@ -541,7 +613,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
 
-                                cartButton.style.backgroundColor = "gray";
+                                cartButton.style.backgroundColor = "lightgray";
+                                cartButton.style.userSelect = "none";
                                 div1.style.display = 'none';
 
                                 cambioInsertar.style.display = 'flex';
@@ -588,15 +661,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (input2.checked) {
 
-                                ocultaProductos.style.display = "flex";
-                                document.querySelectorAll(".cart-product").forEach((cartProducts) => {
-                                    cartProducts.style.display = "none";
-                                });
-                                document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
-                                    separatorDiv.style.display = "none";
-                                });
+                                if (!first) {
+
+                                    ocultaIcono.style.transform = "rotateZ(0deg)";
+
+                                    ocultaProductos.style.display = "flex";
+                                    document.querySelectorAll(".cart-product").forEach((cartProducts) => {
+                                        cartProducts.style.display = "none";
+                                    });
+                                    document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
+                                        separatorDiv.style.display = "none";
+                                    });
+
+                                    first = true;
+                                }
                             
-                                cartButton.style.backgroundColor = "#e64747";
+                                cartButton.style.backgroundColor = "#0D6EFD";
+                                cartButton.style.userSelect = "auto";
 
                                 div2.style.display = 'block';
                                 valueNumberDiv.textContent = "$ " + (total + com) + ".00";
@@ -626,7 +707,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
                             
-                                cartButton.style.backgroundColor = "gray";
+                                cartButton.style.backgroundColor = "lightgray";
+                                cartButton.style.userSelect = "none";
                                 
                                 div2.style.display = 'none';
                                 valueNumberDiv.textContent = "$ " + total + ".00";
@@ -654,15 +736,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (input3.checked) {
 
-                                ocultaProductos.style.display = "flex";
-                                document.querySelectorAll(".cart-product").forEach((cartProducts) => {
-                                    cartProducts.style.display = "none";
-                                });
-                                document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
-                                    separatorDiv.style.display = "none";
-                                });
+                                if (!first) {
+
+                                    ocultaIcono.style.transform = "rotateZ(0deg)";
+
+                                    ocultaProductos.style.display = "flex";
+                                    document.querySelectorAll(".cart-product").forEach((cartProducts) => {
+                                        cartProducts.style.display = "none";
+                                    });
+                                    document.querySelectorAll(".product-separator").forEach((separatorDiv) => {
+                                        separatorDiv.style.display = "none";
+                                    });
+
+                                    first = true;
+                                }
                             
-                                cartButton.style.backgroundColor = "#e64747";
+                                cartButton.style.backgroundColor = "#0D6EFD";
+                                cartButton.style.userSelect = "auto";
                                 
                                 div3.style.display = 'flex';
                                 
@@ -691,7 +781,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
                                 div3.style.display = 'none';
-                                cartButton.style.backgroundColor = "gray";
+                                cartButton.style.backgroundColor = "lightgray";
+                                cartButton.style.userSelect = "none";
                             }
 
                             com = 0;
@@ -744,7 +835,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (radio1.checked) {
                                 
-                                cartButton.style.backgroundColor = "#e64747";
+                                cartButton.style.backgroundColor = "#0D6EFD";
+                                cartButton.style.userSelect = "auto";
 
                                 cambioInsertar.style.display = "flex";
                                 cambioInput.value = "";
@@ -772,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const label1 = document.createElement("label");
                         label1.id = "label1";
-                        label1.textContent = "Pago exacto";
+                        label1.textContent = "Cambio exacto";
                         div11.appendChild(label1);
 
                     const div12 = document.createElement("div");
@@ -794,7 +886,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (radio2.checked) {
 
                                 
-                                cartButton.style.backgroundColor = "gray";
+                                cartButton.style.backgroundColor = "lightgray";
+                                cartButton.style.userSelect = "none";
 
                                 label1.style.color = "";
                                 label2.style.color = "";
@@ -804,7 +897,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const label2 = document.createElement("label");
                         label2.id = "label2";
-                        label2.textContent = "Pago con cambio";
+                        label2.textContent = "Otro monto";
                         div12.appendChild(label2);
             
                     const separatorDiv2 = document.createElement('div');
@@ -934,8 +1027,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 let change = cambioInput.value;
                                 cambioInput.value = (change*18.50).toFixed(2);
-                                console.log(cambioInput.value);
                                 
+                                if (cambioInput.value == 0) {
+                                    cambioInput.value = "";
+                                }
                                 if (cambioInput.value > 999) {
                                     cambioInput.value = 999;
                                 }
@@ -984,8 +1079,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 let change = cambioInput.value;
                                 cambioInput.value = (change/18.5).toFixed(2);
-                                console.log(cambioInput.value);
                                 
+                                if (cambioInput.value == 0) {
+                                    cambioInput.value = "";
+                                }
                                 if (cambioInput.value > 54) {
                                     cambioInput.value = 54;
                                 }
@@ -1107,8 +1204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         cambioInsertar.appendChild(cambioInput);
 
                         const cambioEnter = document.createElement("div");
-                        cambioEnter.className = "red";
-                        cambioEnter.style = "display: flex; justify-content: center; align-items: center; height: 50px; width: 50px; border-radius: 0px 10px 10px 0px;";
+                        cambioEnter.style = " background-color: #0D6EFD; display: flex; justify-content: center; align-items: center; height: 50px; width: 50px; border-radius: 0px 10px 10px 0px;";
                         cambioEnter.addEventListener("click", () => {
 
                             const validationMessage = document.getElementById("validationMessage"); 
@@ -1130,7 +1226,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (contenido >= contenidoTexto) {
 
-                                cartButton.style.backgroundColor = "#e64747";
+                                cartButton.style.backgroundColor = "#0D6EFD";
+                                cartButton.style.userSelect = "auto";
                                 
                                 const inputValue = contenido;
                                 efectivoSeparator.style.display = "block";
@@ -1170,7 +1267,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     cambioValueDiv.style.gap = "10px";
                     cambioValueDiv.addEventListener("click", () => {
 
-                        cartButton.style.backgroundColor = "gray";
+                        cartButton.style.backgroundColor = "lightgray";
+                        cartButton.style.userSelect = "none";
 
                         const inputValue = cambioInput.value;
                         efectivoSeparator.style.display = "none";
@@ -1407,6 +1505,7 @@ function alert(productId) {
 }
 
 window.addEventListener('scroll', alert_hide);
+
 window.addEventListener('click', function () {
 
     if (event.target.id !== 'cart-alert'
