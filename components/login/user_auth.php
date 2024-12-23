@@ -23,6 +23,10 @@ if($dataset){
             $_SESSION['id'] = $user['user_id'];
             $_SESSION['nombre'] = $user['user_firstname'];
             $_SESSION['apellido'] = $user['user_lastname'];
+            $_SESSION['calle'] = $user['user_street'];
+            $_SESSION['numero_exterior'] = $user['user_num_ext'];
+            $_SESSION['telefono'] = $user['user_phone'];
+            $_SESSION['email'] = $user['user_email'];
             $_SESSION['color'] = $user['user_color_picker'];
 
             header("Location: ../billboard/billboard.php");

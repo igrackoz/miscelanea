@@ -1,4 +1,4 @@
 <?php 
-    header('location:components\billboard\billboard.php');
-    exit();
+    header('Location: components/billboard/billboard.php');
+    exit;
 ?>

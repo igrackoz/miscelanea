@@ -19,13 +19,12 @@ mysqli_close($Conn);
         include $bp."contact.php";
         include "../../dev/dev.php";
     ?>
-
     <div class="cart-alert-shadow">
     </div>
     <div class="cart-alert" id="cart-alert">
         <div class="cart-alert-text" id="cart-alert-text">
             <div class="cart-alert-text-content" id="cart-alert-text-content">
-                deseas quitar este elemento de tu carrito?
+                ¿Deseas quitar este elemento de tu carrito?
             </div>
         </div>
         <div class="cart-button1" id="cart-button1" onclick="alert_hide()">
@@ -37,119 +36,121 @@ mysqli_close($Conn);
     </div>
 
     <div class="cart-container">
-        
         <div style="margin-top: 80px; margin-bottom: 80px; display: flex; justify-content: center; align-items: center;">
             <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
         </div>
 
         <div class="cart-elements"></div>
 
-            <?php if (isset($nombre) && isset($apellido)){ ?>
+        <?php if (isset($nombre) && isset($apellido)){ ?>
+
+            <div id="cartalert" style="
+                position: fixed;
+                font-size: 20px;
+                top: -110px;
+                background-color: white;
+                color: red;
+                padding: 20px;
+                left: 10px;
+                right: 10px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
+                transition: transform 0.3s ease-in-out;
+                z-index: 5000;">
+                <div>Completa el formulario!</div>
+            </div>
+
+            <div class="cart-button" style="height: 70px;
+                color: #fff;
+                background-color: #0D6EFD;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                z-index: 10;" onclick="mostrarAlerta()">
+                <div style="font-size: 22px;">Solicitar pedido</div>
+
+            </div>
+
+            <div class="ticket-button" style="height: 70px;
+                color: #0D6EFD;
+                outline: 2px solid #0D6EFD;
+                display: none;
+                margin-bottom: 10px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                z-index: 10;">
+
+                <div style="font-size: 22px;">Visualizar ticket</div>
+
+            </div>
+
+            <div id="ticket" style="
+                width: 100%;
+                height: 0px;
+                background-color: white;
+                font-family: 'Consolas', monospace;
+                overflow: hidden;
+                padding: 10px;
+                color: gray;
+                border-radius: 5px;
+                z-index: 9;
+                transition: height 0.5s ease;
                 
-                <div id="cartalert" style="
-                    position: fixed;
-                    font-size: 20px;
-                    top: -110px;
-                    background-color: white;
-                    color: red;
-                    padding: 20px;
-                    left: 10px;
-                    right: 10px;
-                    border-radius: 5px;
-                    -webkit-box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
-                    -moz-box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
-                    box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
-                    transition: transform 0.3s ease-in-out;
-                    z-index: 5000;">
-                    <div>Completa el formulario!</div>
-                </div>
-
-                <div class="cart-button" style="height: 70px;
-                    color: white;
-                    background-color: lightgray;
-                    display: flex;
-                    margin-bottom: 10px;
-                    justify-content: center;
-                    align-items: center;
-                    border-radius: 10px;
-                    z-index: 10;">
-
-                    <div style="font-size: 22px;">Visualizar ticket</div>
-
-                </div>
-                
-                <div id="ticket" style="
-                    width: 100%;
-                    height: 0;
-                    background-color: white;
-                    font-family: 'Consolas', monospace;
-                    overflow: hidden;
-                    padding: 10px;
-                    color: gray;
-                    border-radius: 5px;
-                    box-shadow: 0px 0px 83px -20px rgba(0,0,0,0.75);
-                    z-index: 9;
-                    transition: height 0.5s ease;
-                    
-                    "><div style="display: flex; justify-content: center; align-items: center; text-align: center;">
-                        TICKET DE COMPRA<br>
-                        <br>
-                        Empresa: Tienda El Rincón Feliz<br>
-                        RFC: TRE8901234B56<br>
-                        Dirección: Calle Ficticia 123, Colonia Inventada, Localidad: Villa Imaginaria, Estado: Fictilandia<br>
-                        Teléfono: 01 800 123 4567<br>
-                        Fecha: 21 de diciembre de 2024<br>
-                        Hora: 14:35:20<br>
-                        Número de ticket: 000123456789<br>
-                        Forma de pago: Tarjeta de débito<br>
-                        Localidad: Villa Imaginaria<br>
-                        </div>
-                        PRODUCTOS<br>
-                        <br>
-                        Camiseta Estampada<br>
-                        Cantidad: 2<br>
-                        Precio Unitario: $150.00<br>
-                        Total: $300.00<br>
-                        <br>
-                        Pantalón Deportivo<br>
-                        Cantidad: 1<br>
-                        Precio Unitario: $450.00<br>
-                        Total: $450.00<br>
-                        <br>
-                        Taza Personalizada<br>
-                        Cantidad: 3<br>
-                        Precio Unitario: $80.00<br>
-                        Total: $240.00<br>
-                        <br>
-                        Mochila de Viaje<br>
-                        Cantidad: 1<br>
-                        Precio Unitario: $750.00<br>
-                        Total: $750.00<br>
-                        <br>
-                        Calcetines Deportivos<br>
-                        Cantidad: 5<br>
-                        Precio Unitario: $50.00<br>
-                        Total: $250.00<br>
-                        <br>
-                        Subtotal: $1,990.00v
-                        IVA (16%): $318.40<br>
-                        Total a Pagar: $2,308.40<br>
-                        <br>
-                        <div style="display: flex; justify-content: center; align-items: center; text-align: center;">
-                        Gracias por tu compra.<br>
-                        ¡Vuelve pronto!<br><br><br><br><br>
-                        </div>
-                    <div class="ticket-button red" style="height: 70px;
-                        color: white;
-                        width: 100%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border-radius: 10px;
-                        z-index: 10;">
-                        <div style="font-size: 22px;">Solicitar pedido</div>
-
+                "><div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+                    TICKET DE COMPRA<br>
+                    <br>
+                    Empresa: Tienda El Rincón Feliz<br>
+                    RFC: TRE8901234B56<br>
+                    Dirección: Calle Ficticia 123, Colonia Inventada, Localidad: Villa Imaginaria, Estado: Fictilandia<br>
+                    Teléfono: 01 800 123 4567<br>
+                    Fecha: 21 de diciembre de 2024<br>
+                    Hora: 14:35:20<br>
+                    Número de ticket: 000123456789<br>
+                    Forma de pago: Tarjeta de débito<br>
+                    Localidad: Villa Imaginaria<br>
                     </div>
+                    PRODUCTOS<br>
+                    <br>
+                    Camiseta Estampada<br>
+                    Cantidad: 2<br>
+                    Precio Unitario: $150.00<br>
+                    Total: $300.00<br>
+                    <br>
+                    Pantalón Deportivo<br>
+                    Cantidad: 1<br>
+                    Precio Unitario: $450.00<br>
+                    Total: $450.00<br>
+                    <br>
+                    Taza Personalizada<br>
+                    Cantidad: 3<br>
+                    Precio Unitario: $80.00<br>
+                    Total: $240.00<br>
+                    <br>
+                    Mochila de Viaje<br>
+                    Cantidad: 1<br>
+                    Precio Unitario: $750.00<br>
+                    Total: $750.00<br>
+                    <br>
+                    Calcetines Deportivos<br>
+                    Cantidad: 5<br>
+                    Precio Unitario: $50.00<br>
+                    Total: $250.00<br>
+                    <br>
+                    Subtotal: $1,990.00v
+                    IVA (16%): $318.40<br>
+                    Total a Pagar: $2,308.40<br>
+                    <br>
+                    <div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+                    Gracias por tu compra.<br>
+                    ¡Vuelve pronto!<br><br><br><br><br>
+                    </div>
+                
                 </div>
 
             <?php } else { ?>
@@ -161,6 +162,7 @@ mysqli_close($Conn);
             <?php }?>
 
         </div>
+
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto; aspect-ratio: 1 / 1;">
             <img style="height: 70%; width: 70%;" src="../../images/christmas_tree.png">
         </div>
@@ -172,10 +174,23 @@ mysqli_close($Conn);
 
 <script>
 
+window.onload = function() {
+    // Verificamos si ya hemos recargado la página antes durante esta sesión
+    if (!sessionStorage.getItem("reloaded")) {
+        // Si no, marcamos que se ha recargado y recargamos la página
+        sessionStorage.setItem("reloaded", "true");
+        location.reload();
+    } else {
+        // Si ya se recargó, eliminamos la marca para la próxima vez
+        sessionStorage.removeItem("reloaded");
+    }
+};
+
 const cartButton = document.querySelector('.cart-button');
+const ticketButton = document.querySelector('.ticket-button');
 const alerta = document.getElementById('cartalert');
 
-// Función para mostrar la alerta temporalmente
+//  CONDICIONES PARA MOSTRAR ALERTA DE FORMULARIO INCOMPLETO
 function mostrarAlerta() {
 
     const efectivo = document.getElementById('efectivo');
@@ -219,11 +234,18 @@ function mostrarAlerta() {
                 cambioInput.style.borderColor = "#ff8a95";
                 cambioInput.focus();
                 alertaDespliegue();
+            } else {
+                shipping();
             }
+        } else {
+            shipping();
         }
+    } else {
+        shipping();
     }
 }
 
+// ANIMACIÓN DE ALERTA DE FORMULARIO INCOMPLETO
 function alertaDespliegue() {
     
     alerta.style.transform = 'translateY(120px)';
@@ -235,9 +257,10 @@ function alertaDespliegue() {
 
 const ticket = document.getElementById("ticket");
 
-cartButton.addEventListener('click', () => {
+ticketButton.addEventListener('click', () => {
+
     if (ticket.style.height === '0px' || !ticket.style.height) {
-        ticket.style.height = 'auto'; // Altura expandida
+        ticket.style.height = '100'; // Altura expandida
     } else {
         ticket.style.height = '0px'; // Colapsar
     }
@@ -266,26 +289,98 @@ const cartProductsContainer = document.querySelector('.cart-elements');
 
 function shipping() {
 
-    const products = [
-        { id: 1, name: "Producto A", quantity: 2, price: 100 },
-        { id: 2, name: "Producto B", quantity: 1, price: 200 },
+
+    let method = "";
+    const method1 = document.getElementById('efectivo');
+    const method2 = document.getElementById('tarjeta');
+    const method3 = document.getElementById('transferencia');
+
+    if (method1.checked) {
+        method = method1.id;
+    }
+    if (method2.checked) {
+        method = method2.id;
+    }
+    if (method3.checked) {
+        method = method3.id;
+    }
+
+    let change = "";
+    const change1 = document.getElementById('radio1');
+    const change2 = document.getElementById('radio2');
+
+    if (change1.checked) {
+        change = "exacto";
+    }
+    if (change2.checked) {
+        change = "otro";
+    }
+
+    let coin = "";
+    const peso = document.getElementById('peso');
+    const dolar = document.getElementById('dolar');
+
+    if (peso.classList.contains('on-currency')) {
+        coin = peso.id;
+    }
+    if (dolar.classList.contains('on-currency')) {
+        coin = dolar.id;
+    }
+
+    let cash = "";
+    const cash1 = document.getElementById('cambioValue');
+
+    cash = cash1.textContent.substring(2);
+
+    const payment = [
+        {
+            paymentMethod: method,
+            paymentChange: change,
+            paymentCoin: coin,
+            paymentCash: cash
+
+        }
     ];
 
-    const extraItems = [
-        { id: 3, name: "Producto C", quantity: 5, price: 50 },
-        { id: 4, name: "Producto D", quantity: 3, price: 75 },
+    sessionStorage.setItem('payment', JSON.stringify(payment));
+    const paymentArray = JSON.parse(sessionStorage.getItem("payment"));
+    const paymentJSON = JSON.stringify(paymentArray);
+    const encodedPayment = encodeURIComponent(paymentJSON);
+
+    const user = [
+        {
+            userFirstname: "<?= $nombre ?>",
+            userLastname: "<?= $apellido ?>",
+            userStreet: "<?= $calle ?>",
+            userNumExt: "<?= $numero_exterior ?>",
+            userPhone: "<?= $telefono ?>",
+            userEmail: "<?= $email ?>"
+
+        }
     ];
 
-    const productsJSON = JSON.stringify(products);
-    const extraItemsJSON = JSON.stringify(extraItems);
+    sessionStorage.setItem('payment', JSON.stringify(user));
+    const userArray = JSON.parse(sessionStorage.getItem("payment"));
+    const userJSON = JSON.stringify(userArray);
+    const encodedUser = encodeURIComponent(userJSON);
 
-    // Redireccionar a un archivo PHP, pasando los dos arreglos como parámetros
-    window.location.href = `enviar_pedido.php?products=${encodeURIComponent(productsJSON)}&extraItems=${encodeURIComponent(extraItemsJSON)}`;
+    // ANTES DE LLEGAR A encodedCarrito, eliminar camposinncesarios (porductId, productDepartment, productImage)
+    const cartArray = JSON.parse(sessionStorage.getItem("carrito"));
+    const filteredCartArray = cartArray.map(item => {
+        
+        const { productId, productDepartment, productImage, ...filteredItem } = item;
+        return filteredItem;
+    });
+    const carritoJSON = JSON.stringify(filteredCartArray);
+    const encodedCarrito = encodeURIComponent(carritoJSON);
+
+
+    // Paso 4: Redirigir a la página con el parámetro en la URL
+    window.location.href = `enviar_pedido.php?products=${encodedCarrito}&payment=${encodedPayment}&user=${encodedUser};`;
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
-
 
     if (cartArray && cartArray.length > 0) { // Verificar si hay productos en el sessionStorage
 
@@ -297,32 +392,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ocultaProductos.id = "ocultaProductos";
         ocultaProductos.style = "padding: 15px 20px 15px 20px; height: 60px; display: flex; justify-content: space-between; align-items: center; border-radius: 10px; border: 1px solid #bbb; background-color: white; color: #777;";
         ocultaProductos.addEventListener("click", () => {
-
-            const separatorDiv5 = document.getElementById("separatorDiv5");
-
-            cambioInsertar.style.display = 'flex';
-            cambioValueDiv.style.display = 'none';
-            cambioValue.textContent = "";
-            cambioInput.style.borderColor = "#ddd";
-            cambioInput.value = "";
-            
-            if (peso.classList.contains("on-currency")) {
-                
-                peso.style.backgroundColor = "#0D6EFD";
-            } else {
-                dolar.style.backgroundColor = "#0D6EFD";
-            }
-
-            com = 0;
-
-            cambio.style.display = 'none';
-            separatorDiv5.style.display = 'none';
-            divisaDiv.style.display = 'none';
-            radio2.checked = false;
-            validationMessage.style.display = 'none';
-
-            peso.style.pointerEvents = "auto";
-            dolar.style.pointerEvents = "auto";
 
             desplegado = !desplegado;
 
@@ -580,8 +649,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         if (divId == 'div1') {
 
-                            cartButton.style.backgroundColor = "lightgray";
-                            cartButton.style.userSelect = "none";
+                            //colorDisabling();
+                                ticketButton.style.display = "none";
 
                             valueNumberDiv.textContent = "$ " + total + ".00";
 
@@ -600,6 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     });
 
                                     first = true;
+                                    desplegado = false
                                 }
 
                                 div1.style.display = 'block';
@@ -613,8 +683,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
 
-                                cartButton.style.backgroundColor = "lightgray";
-                                cartButton.style.userSelect = "none";
                                 div1.style.display = 'none';
 
                                 cambioInsertar.style.display = 'flex';
@@ -660,6 +728,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             div1.style.display = 'none';
 
                             if (input2.checked) {
+                            
+                                //colorEnabling();
+                                ticketButton.style.display = "flex";
 
                                 if (!first) {
 
@@ -674,10 +745,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     });
 
                                     first = true;
+                                    desplegado = false
                                 }
-                            
-                                cartButton.style.backgroundColor = "#0D6EFD";
-                                cartButton.style.userSelect = "auto";
 
                                 div2.style.display = 'block';
                                 valueNumberDiv.textContent = "$ " + (total + com) + ".00";
@@ -707,8 +776,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
                             
-                                cartButton.style.backgroundColor = "lightgray";
-                                cartButton.style.userSelect = "none";
+                                //colorDisabling();
+                                ticketButton.style.display = "none";
                                 
                                 div2.style.display = 'none';
                                 valueNumberDiv.textContent = "$ " + total + ".00";
@@ -735,6 +804,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             div2.style.display = 'none';
 
                             if (input3.checked) {
+                            
+                                //colorEnabling();
+                                ticketButton.style.display = "flex";
 
                                 if (!first) {
 
@@ -749,10 +821,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     });
 
                                     first = true;
+                                    desplegado = false
                                 }
-                            
-                                cartButton.style.backgroundColor = "#0D6EFD";
-                                cartButton.style.userSelect = "auto";
                                 
                                 div3.style.display = 'flex';
                                 
@@ -780,9 +850,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 dolar.style.pointerEvents = "auto";
                             }
                             else {
+                            
+                                //colorDisabling();
+                                ticketButton.style.display = "none";
+
                                 div3.style.display = 'none';
-                                cartButton.style.backgroundColor = "lightgray";
-                                cartButton.style.userSelect = "none";
                             }
 
                             com = 0;
@@ -834,9 +906,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             var label2 = document.getElementById('label2');
 
                             if (radio1.checked) {
-                                
-                                cartButton.style.backgroundColor = "#0D6EFD";
-                                cartButton.style.userSelect = "auto";
+
+                                //colorEnabling();
+                                ticketButton.style.display = "flex";
 
                                 cambioInsertar.style.display = "flex";
                                 cambioInput.value = "";
@@ -885,9 +957,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (radio2.checked) {
 
-                                
-                                cartButton.style.backgroundColor = "lightgray";
-                                cartButton.style.userSelect = "none";
+                                //colorDisabling();
+                                ticketButton.style.display = "none";
 
                                 label1.style.color = "";
                                 label2.style.color = "";
@@ -948,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // TRANSFERENCIA
                 const div3 = document.createElement("div");
                 div3.id = "div3";
-                div3.style = "display: none; align-items: start; gap: 8px; background-color: #0D6EFD; color: white; padding: 15px; margin-bottom: 20px; border-radius: 10px;";
+                div3.style = "display: none; align-items: start; gap: 8px; background-color: orange; color: white; padding: 15px; margin-bottom: 20px; border-radius: 10px;";
                 paymentContainer.appendChild(div3);
 
                     const ImageDiv3 = document.createElement("img");
@@ -1209,6 +1280,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             const validationMessage = document.getElementById("validationMessage"); 
 
+                            document.querySelectorAll(".cart-quantity-minus").forEach((cartMinus) => {
+                                
+                                cartMinus.style.backgroundColor = "lightgray";
+                                cartMinus.style.pointerEvents = "none";
+                            });
+                            document.querySelectorAll(".cart-quantity-plus").forEach((cartPlus) => {
+                                
+                                cartPlus.style.backgroundColor = "lightgray";
+                                cartPlus.style.pointerEvents = "none";
+                            });
+                            
                             const divisaDiv = document.getElementById("divisaDiv"); 
                             const regreso = document.getElementById("regreso"); 
                             const cambioInput = document.getElementById("cambioInput");
@@ -1218,16 +1300,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             let contenidoTexto = cartValueNumber.textContent;
                             contenidoTexto = parseFloat(contenidoTexto.substring(2));
 
-
                             if (dolar.classList.contains("on-currency")) {
 
                                 contenido = parseFloat(cambioInput.value) * 18.5;
                             }
 
                             if (contenido >= contenidoTexto) {
-
-                                cartButton.style.backgroundColor = "#0D6EFD";
-                                cartButton.style.userSelect = "auto";
+                                
+                                //colorEnabling();
+                                ticketButton.style.display = "flex";
                                 
                                 const inputValue = contenido;
                                 efectivoSeparator.style.display = "block";
@@ -1267,8 +1348,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     cambioValueDiv.style.gap = "10px";
                     cambioValueDiv.addEventListener("click", () => {
 
-                        cartButton.style.backgroundColor = "lightgray";
-                        cartButton.style.userSelect = "none";
+                        //colorDisabling();
+                                ticketButton.style.display = "none";
 
                         const inputValue = cambioInput.value;
                         efectivoSeparator.style.display = "none";
@@ -1289,6 +1370,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         peso.style.pointerEvents = "auto";
                         dolar.style.pointerEvents = "auto";
+
+                        document.querySelectorAll(".cart-quantity-minus").forEach((cartMinus) => {
+                                
+                            cartMinus.style.backgroundColor = "#e64747";
+                            cartMinus.style.pointerEvents = "auto";
+                        });
+                        document.querySelectorAll(".cart-quantity-plus").forEach((cartPlus) => {
+                            
+                            cartPlus.style.backgroundColor = "#e64747";
+                            cartPlus.style.pointerEvents = "auto";
+                        });
                                 
                     });
                     cambio.appendChild(cambioValueDiv);
@@ -1582,6 +1674,45 @@ window.addEventListener('resize', () => {
         document.body.style.overflow = '';
     }
 });
+/*
+function colorEnabling() {
+        
+    cartButton.style.backgroundColor = "#0D6EFD";
+    cartButton.style.color = "#fff";
+    cartButton.style.userSelect = "auto";
+    ticketButton.style.backgroundColor = "#fff";
+    ticketButton.style.color = "#0D6EFD";
+    ticketButton.style.outline = "2px solid #0D6EFD";
+    ticketButton.style.userSelect = "auto";
+}
 
+function colorDisabling() {
+
+    cartButton.style.backgroundColor = "#999";
+    cartButton.style.color = "#fff";
+    cartButton.style.userSelect = "none";
+    ticketButton.style.backgroundColor = "";
+    ticketButton.style.color = "#999";
+    ticketButton.style.outline = "2px solid #999";
+    ticketButton.style.userSelect = "none";
+}
+*/
+/*
+function restart() {
+    
+    // Restablecer el estado del carrito
+    const input1 = document.getElementById('input1');
+    const input2 = document.getElementById('input2');
+    const input3 = document.getElementById('input3');
+
+    input1.checked = false;
+    input2.checked = false;
+    input3.checked = false;
+
+}
+    
+restart();
+
+*/
 
 </script>
