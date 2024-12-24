@@ -4,7 +4,14 @@ $bp = "../../includes/";
 include $bp."user-validation.php";
 include $bp."head.php";
 include $bp."dbconnect.php";
-
+/*
+$nombre = isset($nombre) ? $nombre : '';
+$apellido = isset($apellido) ? $apellido : '';
+$calle = isset($calle) ? $calle : '';
+$numero_exterior = isset($numero_exterior) ? $numero_exterior : '';
+$telefono = isset($telefono) ? $telefono : '';
+$email = isset($email) ? $email : '';
+*/
 $query = "SELECT * FROM departments";
 $dataset = mysqli_query($Conn,$query);
 
@@ -64,7 +71,7 @@ mysqli_close($Conn);
 
             <div class="cart-button" style="height: 70px;
                 color: #fff;
-                background-color: #0D6EFD;
+                background-color: gray;
                 width: 100%;
                 display: flex;
                 justify-content: center;
@@ -73,9 +80,8 @@ mysqli_close($Conn);
                 border-radius: 10px;
                 z-index: 10;" onclick="mostrarAlerta()">
                 <div style="font-size: 22px;">Solicitar pedido</div>
-
             </div>
-
+            <!--
             <div class="ticket-button" style="height: 70px;
                 color: #0D6EFD;
                 outline: 2px solid #0D6EFD;
@@ -85,9 +91,7 @@ mysqli_close($Conn);
                 align-items: center;
                 border-radius: 10px;
                 z-index: 10;">
-
                 <div style="font-size: 22px;">Visualizar ticket</div>
-
             </div>
 
             <div id="ticket" style="
@@ -150,24 +154,43 @@ mysqli_close($Conn);
                     Gracias por tu compra.<br>
                     ¡Vuelve pronto!<br><br><br><br><br>
                     </div>
-                
-                </div>
+            </div>-->
 
-            <?php } else { ?>
+        <?php } else { ?>
 
-                <a href="../login/login.php" class="cart-button">
-                    Iniciar Sesión
-                </a>
+            <a href="../login/login.php" class="red" style="
+                text-decoration: none;
+                color: white; display: flex;
+                font-size: 25px;
+                justify-content: center;
+                align-items: center;
+                height: 70px; width: 100%;
+                border-radius: 10px;
+                margin-bottom: 10px;">
+                Iniciar Sesión
+            </a>
 
-            <?php }?>
+        <?php 
 
-        </div>
+            $nombre = '';
+            $apellido = '';
+            $calle = '';
+            $ciudad = '';
+            $estado = '';
+            $telefono = '';
+            $email = '';
+            $direccion = '';
+            $numero_exterior = '';
+    
+        }?>
+        
 
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto; aspect-ratio: 1 / 1;">
             <img style="height: 70%; width: 70%;" src="../../images/christmas_tree.png">
         </div>
 
     </div>
+    
     
 </body>
 </html>
@@ -254,7 +277,7 @@ function alertaDespliegue() {
         alerta.style.transform = 'translateY(-110px)';
     }, 3000);
 }
-
+/*
 const ticket = document.getElementById("ticket");
 
 ticketButton.addEventListener('click', () => {
@@ -264,7 +287,7 @@ ticketButton.addEventListener('click', () => {
     } else {
         ticket.style.height = '0px'; // Colapsar
     }
-});
+});*/
 
 // Agregar el evento de clic al botón
 //cartButton.addEventListener('click', mostrarAlerta);
@@ -383,7 +406,6 @@ function shipping() {
 document.addEventListener('DOMContentLoaded', function() {
 
     if (cartArray && cartArray.length > 0) { // Verificar si hay productos en el sessionStorage
-
 
         // Al empezar a llenar el formulario se ocultan los productos y aparece un desplegable
         // que muestra solo el número de productos
@@ -649,8 +671,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         if (divId == 'div1') {
 
-                            //colorDisabling();
-                                ticketButton.style.display = "none";
+                            colorDisabling();
+                            //ticketButton.style.display = "none";
 
                             valueNumberDiv.textContent = "$ " + total + ".00";
 
@@ -729,8 +751,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (input2.checked) {
                             
-                                //colorEnabling();
-                                ticketButton.style.display = "flex";
+                                colorEnabling();
+                                //ticketButton.style.display = "flex";
 
                                 if (!first) {
 
@@ -776,8 +798,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
                             
-                                //colorDisabling();
-                                ticketButton.style.display = "none";
+                                colorDisabling();
+                            //ticketButton.style.display = "none";
                                 
                                 div2.style.display = 'none';
                                 valueNumberDiv.textContent = "$ " + total + ".00";
@@ -805,8 +827,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (input3.checked) {
                             
-                                //colorEnabling();
-                                ticketButton.style.display = "flex";
+                                colorEnabling();
+                                //ticketButton.style.display = "flex";
 
                                 if (!first) {
 
@@ -851,8 +873,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             else {
                             
-                                //colorDisabling();
-                                ticketButton.style.display = "none";
+                            colorDisabling();
+                            //ticketButton.style.display = "none";
 
                                 div3.style.display = 'none';
                             }
@@ -907,8 +929,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (radio1.checked) {
 
-                                //colorEnabling();
-                                ticketButton.style.display = "flex";
+                                colorEnabling();
+                                //ticketButton.style.display = "flex";
 
                                 cambioInsertar.style.display = "flex";
                                 cambioInput.value = "";
@@ -957,8 +979,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (radio2.checked) {
 
-                                //colorDisabling();
-                                ticketButton.style.display = "none";
+                                colorDisabling();
+                            //ticketButton.style.display = "none";
 
                                 label1.style.color = "";
                                 label2.style.color = "";
@@ -1307,8 +1329,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (contenido >= contenidoTexto) {
                                 
-                                //colorEnabling();
-                                ticketButton.style.display = "flex";
+                                colorEnabling();
+                                //ticketButton.style.display = "flex";
                                 
                                 const inputValue = contenido;
                                 efectivoSeparator.style.display = "block";
@@ -1348,8 +1370,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     cambioValueDiv.style.gap = "10px";
                     cambioValueDiv.addEventListener("click", () => {
 
-                        //colorDisabling();
-                                ticketButton.style.display = "none";
+                        colorDisabling();
+                            //ticketButton.style.display = "none";
 
                         const inputValue = cambioInput.value;
                         efectivoSeparator.style.display = "none";
@@ -1443,7 +1465,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const adviceDiv = document.createElement('div');
                 adviceDiv.id = "adviceDiv";
-                adviceDiv.style = 'display: flex; align-items: start; background-color: orange; color: white; gap: 8px; padding: 15px; margin-bottom: 10px; border-radius: 10px;';
+                adviceDiv.style = 'display: flex; align-items: start; background-color: orange; color: white; gap: 8px; padding: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;';
                 paymentContainer.appendChild(adviceDiv);
 
                 const ImageAdvice3 = document.createElement("img");
@@ -1674,29 +1696,29 @@ window.addEventListener('resize', () => {
         document.body.style.overflow = '';
     }
 });
-/*
+
 function colorEnabling() {
         
     cartButton.style.backgroundColor = "#0D6EFD";
     cartButton.style.color = "#fff";
-    cartButton.style.userSelect = "auto";
+    cartButton.style.userSelect = "auto";/*
     ticketButton.style.backgroundColor = "#fff";
     ticketButton.style.color = "#0D6EFD";
     ticketButton.style.outline = "2px solid #0D6EFD";
-    ticketButton.style.userSelect = "auto";
+    ticketButton.style.userSelect = "auto";*/
 }
 
 function colorDisabling() {
 
     cartButton.style.backgroundColor = "#999";
     cartButton.style.color = "#fff";
-    cartButton.style.userSelect = "none";
+    cartButton.style.userSelect = "none";/*
     ticketButton.style.backgroundColor = "";
     ticketButton.style.color = "#999";
     ticketButton.style.outline = "2px solid #999";
-    ticketButton.style.userSelect = "none";
+    ticketButton.style.userSelect = "none";*/
 }
-*/
+
 /*
 function restart() {
     

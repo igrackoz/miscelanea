@@ -38,12 +38,6 @@ $db_password = getenv('DB_PASSWORD');
 $db_name = getenv('DB_NAME');
 $smtp_password = getenv('SMTP_PASSWORD');
 
-echo $db_server;
-echo $db_user;
-echo $db_password;
-echo $db_name;
-echo $smtp_password;
-
 $Conn = mysqli_connect($db_server,$db_user,$db_password,$db_name) or
     die("Conexión fallida: ".mysqli_connect_error());
     mysqli_set_charset($Conn,"utf8");
