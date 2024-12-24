@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function cartUpdate(productId,productPrice,productQuantity,isAdd) { 
 
+    const cartButton = document.querySelector('.cart-button');
     const valueNumberDiv = document.querySelector('.cart-value-number');
 
     if (document.querySelector('.cart-value-number')) {
@@ -247,10 +248,12 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
             
             if (total >= 50) {
 
+                cartButton.style.display = 'flex';
                 noPaymentContainer.style.display = 'none';
                 paymentContainer.style.display = 'block';
             } else {
 
+                cartButton.style.display = 'none';
                 noPaymentContainer.style.display = 'block';
                 paymentContainer.style.display = 'none';
 

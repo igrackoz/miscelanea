@@ -575,9 +575,11 @@ document.addEventListener('DOMContentLoaded', function() {
             cartProductsContainer.appendChild(paymentContainer);
 
             if (total >= 50) {
+                cartButton.style.display = 'flex';
                 noPaymentContainer.style.display = 'none';
                 paymentContainer.style.display = 'block';
             } else {
+                cartButton.style.display = 'none';
                 noPaymentContainer.style.display = 'block';
                 paymentContainer.style.display = 'none';
             }
