@@ -1,5 +1,10 @@
-<?php require_once "../../includes/session.php" ?>
-<?php include "../../includes/head.php"; ?>
+<?php
+
+$bp = "../../includes/";
+require_once $bp."session.php";
+require_once $bp."head.php";
+
+?>
 
 <body>
     <div class="container">
@@ -54,7 +59,7 @@
                             <?php
                             }
                         ?>
-                        <form action="../register/insertar_usuario.php" method="POST" class="w-100">
+                        <form action="insertar_usuario.php" method="POST" class="w-100">
                             <div class="d-flex mb-3 d-flex justify-content-between">
                                 <div class="input-group-lg">
                                     <input class="col form-control input-lg" type="text" name="nombre" id="nombre" placeholder="Nombre(s)" required>

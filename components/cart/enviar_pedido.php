@@ -1,6 +1,4 @@
-<?php
-/*
-require_once '../../vendor2/vendor/autoload.php';
+<?php ob_start();
 
 if (isset($_GET['products']) && isset($_GET['payment']) && isset($_GET['user'])) {
     $products = explode(",", urldecode($_GET['products']));
@@ -28,33 +26,9 @@ if (isset($_GET['products']) && isset($_GET['payment']) && isset($_GET['user']))
     }
     $userInfo .= "</ul>";
     
-    // Concatenar todo el contenido para el cuerpo del correo
-
-    
     $message = $productList . $paymentList . $userInfo;
-
-    $to = "igrackoz@outlook.com";  // Dirección de correo destino
-    $subject = "pedido #001";  // Asunto del correo
-
-
-    // Asunto del correo
-    $subject = "Notificación de inserción en la base de datos";
+}
     
-    // Cabeceras
-    $headers = "From: webmaster@tudominio.com";  // Cambia esto por tu correo de remitente
-    
-    // Enviar el correo
-    if (mail($to, $subject, $message, $headers)) {
-        echo "Correo enviado exitosamente.";
-    } else {
-        echo "Error al enviar el correo.";
-    }
-}*/
-
-?>    
-
-<?php
-
 include_once '../../includes/user-validation.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -63,8 +37,7 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require '../../vendor/autoload.php';
-require_once '../../vendor2/vendor/autoload.php';
-
+require '../../includes/dbconnect.php';
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -75,13 +48,13 @@ try {
     $mail->Host       = 'mail.miscelanea-ana.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
     $mail->Username   = 'envios@miscelanea-ana.com';                     //SMTP username
-    $mail->Password   = 'Ribbonella16$';                               //SMTP password
+    $mail->Password   = $smtp_password;                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('envios@miscelanea-ana.com', 'Mailer');
-    $mail->addAddress('igrackoz@gmail.com', 'Joe User');     //Add a recipient
+    $mail->setFrom('envios@miscelanea-ana.com', 'Miscelanea Ana');
+    $mail->addAddress('igrackoz@gmail.com', $nombre . ' ' . $apellido);     //Add a recipient
     $mail->addReplyTo('envios@miscelanea-ana.com', 'Information');
 /*
     //Attachments
@@ -90,14 +63,16 @@ try {
 */
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+    $mail->Subject = 'Miscelanea Ana (Pedido)';
+    $mail->Body    = $message;
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
 
-?>    
+    header('Location: send.php?status=success');
+
+} catch (Exception $e) {
+    header('Location: send.php?status=failed');
+} 
+
+ob_end_flush();

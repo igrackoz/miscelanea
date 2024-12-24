@@ -1,7 +1,7 @@
 <?php
 
 global $Conn;
-require_once "../../includes/dbconnect.php";
+include $bp."dbconnect.php";
 
 function registrarUsuario($Conn, $nombre, $apellido, $calle, $numero, $email, $password, $color){
     

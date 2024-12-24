@@ -1,6 +1,6 @@
 <?php
 
-include "../../includes/paths.php";
+$bp = "../../includes/";
 include $bp."user-validation.php";
 include $bp."head.php";
 include $bp."dbconnect.php";

@@ -1,10 +1,7 @@
 <?php
-session_start();  // Inicia la sesión
-
-include 'dbconnect.php';
 
 $entrada = $_GET['cool-search'] ?? '';
-echo "Entrada original: " . htmlspecialchars($entrada) . "<br>";
+// echo "Entrada original: " . htmlspecialchars($entrada) . "<br>";
 
 $separador = ' ';
 $arreglo = explode($separador, $entrada);
@@ -15,11 +12,15 @@ $resultado = array_filter($arreglo, function ($palabra) use ($conectores) {
     return trim($palabra) !== '' && !in_array(strtolower($palabra), $conectores);
 });
 
-echo "Palabras filtradas: " . htmlspecialchars(implode(', ', $resultado)) . "<br>";
+// echo "Palabras filtradas: " . htmlspecialchars(implode(', ', $resultado)) . "<br>";
+
+
+require '../vendor2/vendor/autoload.php';
+require 'dbconnect.php';
 
 try {
 
-    $pdo = new PDO('mysql:host=localhost;dbname=tienda_ana;charset=utf8', $usr, $pwd);
+    $pdo = new PDO('mysql:host='.$db_server.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $resultadosTotales = [];
@@ -49,5 +50,3 @@ try {
 } catch (PDOException $e) {
     echo "Error en la conexión: " . htmlspecialchars($e->getMessage());
 }
-
-?>

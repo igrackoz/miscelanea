@@ -1,27 +1,50 @@
 <?php
 
-// Función para cargar el archivo .env
-function loadEnv($file)
-{
-    if (file_exists($file)) {
-        $variables = parse_ini_file($file);
-        foreach ($variables as $key => $value) {
-            putenv("$key=$value");
-        }
-    }
+// Establecer la ubicación del archivo .env
+if (file_exists('../../includes/.env')) {
+    $envFile = '../../includes/.env';
+} else {
+    $envFile = '../includes/.env';
 }
 
-// Cargar las variables de entorno desde el archivo .env
-loadEnv(__DIR__ . '/.env');
+// Leer el archivo .env
+$envContent = file_get_contents($envFile);
 
-// Usar las variables de entorno para la conexión
-$servername = getenv('DB_SERVER');
-$usr = getenv('DB_USER');
-$pwd = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+// Procesar las líneas del archivo .env
+$lines = explode("\n", $envContent);
 
-$Conn = mysqli_connect($servername,$usr,$pwd,$dbname) or
+// Parsear el contenido del archivo .env en un arreglo de variables
+foreach ($lines as $line) {
+    // Ignorar líneas vacías y comentarios
+    if (empty($line) || $line[0] === '#') {
+        continue;
+    }
+
+    // Separar clave y valor por el signo igual
+    list($key, $value) = explode('=', $line, 2);
+
+    // Eliminar posibles espacios al inicio o final de la clave y valor
+    $key = trim($key);
+    $value = trim($value);
+
+    // Asignar las variables de entorno a variables PHP
+    putenv("$key=$value");
+}
+
+// Obtener las variables de entorno directamente con getenv()
+$db_server = getenv('DB_SERVER');
+$db_user = getenv('DB_USER');
+$db_password = getenv('DB_PASSWORD');
+$db_name = getenv('DB_NAME');
+$smtp_password = getenv('SMTP_PASSWORD');
+
+echo $db_server;
+echo $db_user;
+echo $db_password;
+echo $db_name;
+echo $smtp_password;
+
+$Conn = mysqli_connect($db_server,$db_user,$db_password,$db_name) or
     die("Conexión fallida: ".mysqli_connect_error());
     mysqli_set_charset($Conn,"utf8");
 
-?>
