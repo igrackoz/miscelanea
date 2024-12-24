@@ -2,14 +2,7 @@
 
 session_start();
 
-if(isset($_SESSION['id']) &&
-    isset($_SESSION['nombre']) &&
-    isset($_SESSION['apellido']) &&
-    isset($_SESSION['calle']) &&
-    isset($_SESSION['numero_exterior']) &&
-    isset($_SESSION['telefono']) &&
-    isset($_SESSION['email']) &&
-    isset($_SESSION['color'])){
+if(isset($_SESSION['id'])){
     
     $id = $_SESSION['id'];
     $nombre = $_SESSION['nombre'];

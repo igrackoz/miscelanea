@@ -1,8 +1,8 @@
 <?php
 
 include "../../includes/paths.php";
-include $bp."head.php";
 include $bp."user-validation.php";
+include $bp."head.php";
 include $bp."dbconnect.php";
 
 $iddep = $_GET['iddep'];
