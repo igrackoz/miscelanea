@@ -42,6 +42,7 @@ function add(productId, productDescription, productDepartment, productPrice, pro
                 sesionArray[i].productQuantity += productQuantity;
                 document.getElementById('cantidad' + productId).innerHTML = sesionArray[i].productQuantity;
                 cartUpdate(productId,productPrice,sesionArray[i].productQuantity,true);
+                iconNotification(productQuantity,true);
                 stocked = true;
                 break;
 
@@ -50,6 +51,7 @@ function add(productId, productDescription, productDepartment, productPrice, pro
                 sesionArray[i].productQuantity += productQuantity;
                 document.getElementById('cantidad' + productId).innerHTML = sesionArray[i].productQuantity;
                 cartUpdate(productId,productPrice,sesionArray[i].productQuantity,true);
+                iconNotification(productQuantity,true);
                 stocked = true;
                 break;
             }
@@ -60,6 +62,7 @@ function add(productId, productDescription, productDepartment, productPrice, pro
 
         sesionArray.push({productId, productDescription, productDepartment, productPrice, productImage, productQuantity});
         document.getElementById('cantidad' + productId).innerHTML = "1";
+        iconNotification(productQuantity,true);
         gridding(productId);
     }
 
@@ -78,6 +81,7 @@ function remove(productId, productPrice, productQuantity) {
 
                 sesionArray.splice(i, 1); // Eliminar el producto del carrito
                 gridding(productId); // Actualizar la visualización del carrito
+                iconNotification(productQuantity,false);
                 break;
 
             } else if (sesionArray[i].productQuantity === 2) {
@@ -100,6 +104,7 @@ function remove(productId, productPrice, productQuantity) {
                 sesionArray[i].productQuantity -= productQuantity; // Restar la cantidad del producto
                 document.getElementById('cantidad' + productId).innerHTML = sesionArray[i].productQuantity; // Actualizar la cantidad en la interfaz
                 cartUpdate(productId, productPrice, sesionArray[i].productQuantity, false); // Actualizar el carrito
+                iconNotification(productQuantity,false);
                 break;
 
             } else {
@@ -107,6 +112,7 @@ function remove(productId, productPrice, productQuantity) {
                 sesionArray[i].productQuantity -= productQuantity; // Restar la cantidad del producto
                 document.getElementById('cantidad' + productId).innerHTML = sesionArray[i].productQuantity; // Actualizar la cantidad en la interfaz
                 cartUpdate(productId, productPrice, sesionArray[i].productQuantity, false); // Actualizar el carrito
+                iconNotification(productQuantity,false);
                 break;
             }
         }
@@ -287,6 +293,36 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
             commission.textContent = "+ $ " + com + ".00";
 
             valueNumberDiv.textContent = "$ " + (total + com) + ".00";
+        }
+    }
+}
+function iconNotification(productQuantity,isAdd) {
+
+    const notificationNumber = document.querySelector('.notification-number');
+
+    if (isAdd) {
+
+        notificationNumber.style.display = 'flex';
+        if (notificationNumber) {
+
+            let contenidoTexto = notificationNumber.textContent != 0 ? notificationNumber.textContent : 0;
+            contenidoTexto = parseFloat(contenidoTexto);
+            contenidoTexto += productQuantity;
+            notificationNumber.textContent = contenidoTexto;
+        }
+
+    } else {
+
+        if (notificationNumber) {
+
+            let contenidoTexto = notificationNumber.textContent;
+            contenidoTexto -= productQuantity;
+            if (contenidoTexto == 0) {
+
+                notificationNumber.textContent = 0;
+                notificationNumber.style.display = 'none';
+            }
+            notificationNumber.textContent = contenidoTexto;
         }
     }
 }

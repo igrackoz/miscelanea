@@ -91,18 +91,24 @@ mysqli_close($Conn);
         </div>
     </div>
 
-    <a href="../../components/cart/cart.php">
-        <div class="cart-redirect red">
-            <div class="inner-div">
+    <div class="account-container">
+        <a href="../cart/cart.php">
+            <div class="cart-box red">
+                <div class="inner-div">
 
+                </div>
             </div>
-        </div>
-    </a>
-    <div style="height: 100px; display: flex; justify-content: center;">artículos favoritos</div>
-    <div style="height: 100px;"></div>
+        </a>
+        <a href="../favorites/favorites.php" class="favorites-box">
+            artículos favoritos
+        </a>
+    </div>
+
+
     <div style="display: flex; justify-content: center; font-size: 20px;">
         Cerrar Sesión
     </div>
+    <?php include '../../includes/footer-image.php'; ?>
 </body>
 </html>
 
@@ -126,17 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             
     const div1 = document.createElement('div');
-    div1.style = 'font-size: 30px; color: white;';
+    div1.style = 'font-size: 30px;';
     div1.innerHTML = 'Carrito de Compras';
     innerDiv.appendChild(div1);
 
     const div2 = document.createElement('div');
-    div2.style.color = 'white';
     div2.innerHTML = cantidad + ' productos';
     innerDiv.appendChild(div2);
 
     const div3 = document.createElement('div');
-    div3.style = 'font-size: 40px; right: 0; bottom: 0; color: white;';
+    div3.style = 'font-size: 40px; right: 0; bottom: 0;';
     innerDiv.appendChild(div3);
 
     const strong = document.createElement('strong');

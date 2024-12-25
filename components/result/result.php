@@ -88,12 +88,10 @@ while ($row = mysqli_fetch_assoc($dataset)) {
         ?>
         </div>
     </div>
-    <div class="product-low-padding">
-        <div style="font-size: 20px; height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
-            Página 1
-        </div>
+    <div style="font-size: 20px; height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
+        Página 1
     </div>
-
+    <?php include '../../includes/footer-image.php'; ?>
 </body>
 </html>
 
@@ -101,7 +99,7 @@ while ($row = mysqli_fetch_assoc($dataset)) {
 
 const boxCatalog = document.querySelector('.box-catalog');
 const boxProduct = document.querySelector('.box-product');
-
+/*
 function adjustHeight() {
 
     const bar = document.querySelector('.bar');
@@ -132,5 +130,5 @@ function adjustHeight() {
 window.addEventListener('resize', adjustHeight);
 window.addEventListener('scroll', adjustHeight);
 window.addEventListener('load', adjustHeight);
-
+*/
 </script>

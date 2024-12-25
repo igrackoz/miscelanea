@@ -47,10 +47,12 @@ mysqli_close($Conn);
             <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
         </div>
 
+        <!-- contenedor de elementos del carrito  -->
         <div class="cart-elements"></div>
 
         <?php if (isset($nombre) && isset($apellido)){ ?>
 
+            <!-- pop up alerta superior de formulario  -->
             <div id="cartalert" style="
                 position: fixed;
                 font-size: 20px;
@@ -69,6 +71,7 @@ mysqli_close($Conn);
                 <div>Completa el formulario!</div>
             </div>
 
+            <!-- botón de pedido  -->
             <div class="cart-button" style="height: 70px;
                 color: #fff;
                 background-color: gray;
@@ -81,8 +84,9 @@ mysqli_close($Conn);
                 z-index: 10;" onclick="mostrarAlerta()">
                 <div style="font-size: 22px;">Solicitar pedido</div>
             </div>
-            <!--
-            <div class="ticket-button" style="height: 70px;
+
+            <!-- botón de mostrar ticket (en proceso)  -->
+            <!--<div class="ticket-button" style="height: 70px;
                 color: #0D6EFD;
                 outline: 2px solid #0D6EFD;
                 display: none;
@@ -92,9 +96,11 @@ mysqli_close($Conn);
                 border-radius: 10px;
                 z-index: 10;">
                 <div style="font-size: 22px;">Visualizar ticket</div>
-            </div>
+            </div>-->
 
-            <div id="ticket" style="
+            
+            <!-- ticket  -->
+            <!--<div id="ticket" style="
                 width: 100%;
                 height: 0px;
                 background-color: white;
@@ -158,7 +164,8 @@ mysqli_close($Conn);
 
         <?php } else { ?>
 
-            <a href="../login/login.php" class="red" style="
+            <!-- botón de inicio de sesión  -->
+            <a href="../login/login.php" class="login-button red" style="
                 text-decoration: none;
                 color: white; display: flex;
                 font-size: 25px;
@@ -183,15 +190,10 @@ mysqli_close($Conn);
             $numero_exterior = '';
     
         }?>
-        
 
-        <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto; aspect-ratio: 1 / 1;">
-            <img style="height: 70%; width: 70%;" src="../../images/christmas_tree.png">
-        </div>
+        <?php include '../../includes/footer-image.php'; ?>
 
     </div>
-    
-    
 </body>
 </html>
 
@@ -209,6 +211,7 @@ window.onload = function() {
     }
 };
 
+const loginButton = document.querySelector('.login-button');
 const cartButton = document.querySelector('.cart-button');
 const ticketButton = document.querySelector('.ticket-button');
 const alerta = document.getElementById('cartalert');
@@ -405,7 +408,7 @@ function shipping() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    if (cartArray && cartArray.length > 0) { // Verificar si hay productos en el sessionStorage
+    if (cartArray && cartArray.length > 0) { console.log("cart");// Verificar si hay productos en el sessionStorage
 
         // Al empezar a llenar el formulario se ocultan los productos y aparece un desplegable
         // que muestra solo el número de productos
@@ -548,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cartProductsContainer.appendChild(noPaymentContainer);
 
                 const LowPaymentAdvice = document.createElement('div');
-                LowPaymentAdvice.style = 'display: flex; align-items: start; background-color: #ffa200; color: white; gap: 8px; padding: 15px; margin-bottom: 10px; border-radius: 10px;';
+                LowPaymentAdvice.style = 'display: flex; align-items: start; background-color: #ffa200; color: white; gap: 8px; padding: 15px; margin-bottom: 10px; margin-top: 10px; border-radius: 10px;';
                 noPaymentContainer.appendChild(LowPaymentAdvice);
 
                     const ImageAdvice4 = document.createElement("img");
@@ -1534,46 +1537,56 @@ document.addEventListener('DOMContentLoaded', function() {
         //
     } else { // Cuando no haya productos en el carrito.
 
-        cartProductsContainer.style = 'display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 30px;';
-
-        const iconDiv = document.createElement('div');
-        iconDiv.style = 'margin-top: 40px;';
-        cartProductsContainer.appendChild(iconDiv);
-
-        const iconImageDiv = document.createElement('img');
-        iconImageDiv.src = '../../images/cart-red.svg';
-        iconDiv.appendChild(iconImageDiv);
-
-        const noProductsMessageDiv = document.createElement('div');
-        noProductsMessageDiv.textContent = 'No hay productos en tu carrito.';
-        noProductsMessageDiv.style = 'font-size: 25px; text-align: center; font-weight: bold;';
-        cartProductsContainer.appendChild(noProductsMessageDiv);
-
-        const adviceDiv = document.createElement('div');
-        adviceDiv.textContent = 'Puedes añadir productos usando en buscador o en la sección de departamentos.';
-        adviceDiv.style.cssText = 'font-size: 18px; text-align: center;';
-        cartProductsContainer.appendChild(adviceDiv);
-
-        const redirectButtonDiv = document.createElement('a');
-        redirectButtonDiv.href = '../../';
-        redirectButtonDiv.className = 'red';
-        redirectButtonDiv.style = 'margin-bottom: 40px; height: 60px; width: 90%; border-radius: 10px; color: white; display: flex; align-items: center; justify-content: center;';
-        cartProductsContainer.appendChild(redirectButtonDiv);
-
-        const redirectButtonText = document.createElement('div');
-        redirectButtonText.className = 'red';
-        redirectButtonText.style = 'font-weight: bold; font-size: 20px;';
-        redirectButtonText.textContent = 'Continuar comprando';
-        redirectButtonDiv.appendChild(redirectButtonText);
-        
-        const lowPadding = document.createElement('div');
-        lowPadding.className = 'product-low-padding';
-        mainContainer.appendChild(lowPadding);
-
-        cartRedirect.style = 'display: none;';
+        noprods();
     }
 });
 
+function noprods(){
+    
+    if (loginButton) {
+        loginButton.style = 'display: none;';
+    }
+    
+    if (cartButton) {
+        cartButton.style = 'display: none;';
+    }
+
+    cartProductsContainer.style = 'display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 30px;';
+
+    const iconDiv = document.createElement('div');
+    iconDiv.style = 'margin-top: 40px;';
+    cartProductsContainer.appendChild(iconDiv);
+
+    const iconImageDiv = document.createElement('img');
+    iconImageDiv.src = '../../images/cart-red.svg';
+    iconDiv.appendChild(iconImageDiv);
+
+    const noProductsMessageDiv = document.createElement('div');
+    noProductsMessageDiv.textContent = 'No hay productos en tu carrito.';
+    noProductsMessageDiv.style = 'font-size: 25px; text-align: center; font-weight: bold;';
+    cartProductsContainer.appendChild(noProductsMessageDiv);
+
+    const adviceDiv = document.createElement('div');
+    adviceDiv.textContent = 'Puedes añadir productos usando en buscador o en la sección de departamentos.';
+    adviceDiv.style.cssText = 'font-size: 18px; text-align: center;';
+    cartProductsContainer.appendChild(adviceDiv);
+
+    const redirectButtonDiv = document.createElement('a');
+    redirectButtonDiv.href = '../../';
+    redirectButtonDiv.className = 'red';
+    redirectButtonDiv.style = 'margin-bottom: 40px; height: 60px; width: 90%; border-radius: 10px; color: white; display: flex; align-items: center; justify-content: center;';
+    cartProductsContainer.appendChild(redirectButtonDiv);
+
+    const redirectButtonText = document.createElement('div');
+    redirectButtonText.className = 'red';
+    redirectButtonText.style = 'font-weight: bold; font-size: 20px;';
+    redirectButtonText.textContent = 'Continuar comprando';
+    redirectButtonDiv.appendChild(redirectButtonText);
+
+    if (cartRedirect) {
+        cartRedirect.style = 'display: none;';
+    }
+}
 
 const boxCatalog = document.querySelector('.box-catalog');
 
@@ -1581,7 +1594,6 @@ function adjustHeight() {
 
     const bar = document.querySelector('.bar');
     const coolNavbar = document.querySelector('.cool-navbar');
-    const productLowPadding = document.querySelector('.product-low-padding');
     const cartElement = document.querySelector('.cart-elements');
 
     const estilo = getComputedStyle(cartElement);
@@ -1599,7 +1611,6 @@ function adjustHeight() {
 
     const totalHeight = window.innerHeight - lessHeight;
 
-    productLowPadding.style.height = totalHeight + "px";
 }
 
 if (!(cartArray && cartArray.length > 0)) {

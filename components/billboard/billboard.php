@@ -103,7 +103,7 @@ mysqli_close($Conn);
 
         </div>
     </div>
-
+    <?php include '../../includes/footer-image.php'; ?>
 </body>
 </html>
 

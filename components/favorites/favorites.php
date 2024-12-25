@@ -30,7 +30,7 @@ mysqli_close($Conn);
     ?>
 
     <div class="fade-top">
-        <div class="dep-title"><?= htmlspecialchars($departmentName) ?></div>
+        <div class="dep-title">FAVORITOS</div>
     </div>
 
     <div style="margin-top: 50px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
@@ -113,8 +113,8 @@ function adjustHeight() {
 
 window.addEventListener('resize', adjustHeight);
 window.addEventListener('scroll', adjustHeight);
-window.addEventListener('load', adjustHeight);
-*/
+window.addEventListener('load', adjustHeight);*/
+
 function fadeAppear(){
     
     const fadeTop = document.querySelector('.fade-top');

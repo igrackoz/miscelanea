@@ -26,9 +26,26 @@
             <img class="cancel-cool-image" id="cancel-cool-image" src="../../images/x.svg">
         </div>
     </div>
-    <a href="../cart/cart.php" class="cool-elements">
-        <img src="../../images/cart.svg">
-    </a>
+    <div class="cool-elements">
+        <a href="../cart/cart.php" class="cart-notification" style="height: 30px; width: 30px;">
+            <div class="notification-number" style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                top: 0;
+                right: 0;
+                background-color: #fff;
+                color: #e64747;
+                height: 20px;
+                width: 20px;
+                border: 2px solid #e64747;
+                border-radius: 50%;">
+                    
+            </div>
+            <img class="notification-icon" src="../../images/cart.svg">
+        </a>
+</div>
 
     <?php if (isset($id) && isset($nombre) && isset($apellido) && isset($color)){ ?>
 
@@ -69,63 +86,16 @@
 
 <script>
 
-/*  OCULTA EL NAVEGADOR AL BAJAR AL FONDO DE LA PAGINA */
-
-/*
-const coolnav = document.getElementById('cool-navbar');
-let lastScrollTop = 0;
-let ticking = false;
-
-function checkScrollPosition() {
-
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const documentHeight = document.documentElement.scrollHeight;
-    const windowHeight = window.innerHeight;
-
-    
-        // Verifica si el usuario está cerca del final de la página
-        if (documentHeight - scrollTop - windowHeight < 1) {
-            coolnav.classList.add('ocultar');
-        } else {
-            coolnav.classList.remove('ocultar');
-        }
-    
-
-    // Solo ejecuta si hay un cambio en la posición de desplazamiento
-    if (scrollTop !== lastScrollTop) {
-        
-        lastScrollTop = scrollTop;
-
-        if (!ticking) {
-
-            window.requestAnimationFrame(() => {
-                ticking = false;
-            });
-
-            ticking = true;
-        }
-    }
-}
-
-// Llama a la función al cargar la página para iniciar la verificación
-function startChecking() {
-    checkScrollPosition();
-    requestAnimationFrame(startChecking);
-}
-
-// comprueba si el objeto existe antes de ejecutar la función.
-if (coolnav) {
-    startChecking();  
-}
-*/
 document.getElementById('dinamic-cancel').addEventListener('click', function () {
     const textInput = document.getElementById('cool-search');
     textInput.value = ''; // Borra el texto
     textInput.focus(); // Devuelve el foco al input
 });
 
+
 let bool_search = false;
 
+// Función para agrandar el buscador
 function bigger(){
 
     const coolnav = document.querySelector('.start-search');
@@ -149,16 +119,19 @@ function bigger(){
         cancel.forEach(element => {
             element.style.display = "none";
         });
+        
+        bool_search = false;
     }
 
     else {
 
-        coolnav.classList.add('big');
-        search.classList.add('move');
-        entry.classList.add('show');
+        coolnav.classList.toggle('big', true);
+        search.classList.toggle('move', true);
+        entry.classList.toggle('show', true);
         nav2Form.style.display = "block";
         entry.focus();
-        coolnav.classList.remove('small');
+        coolnav.classList.toggle('small', false);
+
         coolElements.forEach(element => {
             element.style.display = "none";
         });
@@ -167,7 +140,6 @@ function bigger(){
         });
 
         bool_search = true;
-        
     }
 }
 
@@ -195,32 +167,6 @@ function bigger2(){
     
     bool_search = false;
 }
-
-window.visualViewport.addEventListener('resize', () => {
-    
-    const coolnav = document.querySelector('.start-search');
-    const search = document.querySelector('.dinamic-search');
-    const entry = document.querySelector('.cool-search');
-    
-    const navbar = document.querySelector('.cool-navbar');
-    const keyboardHeight = window.innerHeight - window.visualViewport.height;
-
-
-    if (keyboardHeight > 0) {
-        navbar.style.bottom = `${keyboardHeight}px`;
-    } else {
-
-        navbar.style.bottom = '0px';
-    }
-});
-
-document.addEventListener('scroll', function(event) {
-    
-    if (bool_search) {
-        
-        bigger2();
-    }
-});
 
 document.addEventListener('click', function(event) {
     
@@ -251,6 +197,25 @@ document.addEventListener('touchstart', function(event) {
             && event.target.id !== 'search-image') {
         
         bigger2();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    let productNumber = 0;
+    const notificationNumber = document.querySelector('.notification-number');
+    const carrito = JSON.parse(sessionStorage.getItem('carrito'));
+
+    if (carrito && carrito.length > 0) {
+        
+        carrito.forEach(elemento => {
+            
+            productNumber += parseInt(elemento.productQuantity);
+        });
+        notificationNumber.innerHTML = productNumber;
+    } else {
+
+        notificationNumber.style.display = "none";
     }
 });
 

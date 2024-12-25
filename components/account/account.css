@@ -1,19 +1,62 @@
-.cart-redirect{
+.account-container{
 
-    padding: 5px;
-    margin: 10px;
-    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
 }
 
-.inner-div{
+.cart-box{
 
-    height: 100%;
-    
-    width: 100%;
-    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
     border-radius: 10px;
-    background: linear-gradient(0deg, rgba(2,0,36,0) 0%, #ff7575 100%);
-}.inner-div:active{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-    background: linear-gradient(180deg, rgba(2,0,36,0) 80%, #ff7575 100%);
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+
+.favorites-box{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.cart-notification{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+
+}
+
+.notification-number{
+
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    z-index: 1;
+}
+
+.notification-icon{
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    z-index: 0;
 }
