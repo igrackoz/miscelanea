@@ -17,6 +17,12 @@ $query2 = "SELECT product_id, product_image, product_description, product_price,
             WHERE department_id = ".$iddep;
 $dataset2 = mysqli_query($Conn,$query2);
 
+$favorite_query = "SELECT favorite_id, product_id, user_id FROM favorites WHERE user_id = ?";
+$stmt = mysqli_prepare($Conn, $favorite_query);
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+$favorite_dataset = mysqli_stmt_get_result($stmt);
+
 mysqli_close($Conn);
 
 ?>
@@ -42,27 +48,47 @@ mysqli_close($Conn);
         <div class="box-catalog">
         
         <?php
+        
 
         if (mysqli_num_rows($dataset2) > 0) {
 
-            while ($row2 = mysqli_fetch_assoc($dataset2)) {?>
+            while ($row = mysqli_fetch_assoc($dataset2)) {
 
-                <div class="box-product" class="box-dep" id="<?= $row2['product_id'] ?>">
+                $favorite = true;
+
+                if (mysqli_num_rows($favorite_dataset) > 0) {
+
+                    mysqli_data_seek($favorite_dataset, 0);
+
+                    while ($favorite_row = mysqli_fetch_assoc($favorite_dataset)) {
+                        
+                        if ($favorite_row['product_id'] == $row['product_id']) {
+                            $favorite = false;
+                        }
+                    }
+                }
+
+                ?>
+
+                <div class="box-product" class="box-dep" id="<?= $row['product_id'] ?>">
                     <div class="box-product-image">
-                        <img style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= htmlspecialchars($departmentName) ?>/<?= $row2['product_image'] ?>">
+                        <div class="box-product-favorite" id="box-product-favorite<?= $row['product_id'] ?>" onclick="favorite(<?= $id . ',' . $row['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
+                            <img class="heart-icon<?= $row['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
+                        </div>
+                        <img class="box-product-photo" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= htmlspecialchars($departmentName) ?>/<?= $row['product_image'] ?>">
                     </div>
                     <div class="box-product-name">
-                        <?= $row2['product_description'] ?>
+                        <?= $row['product_description'] ?>
                     </div>
                     <div class="box-product-price">
-                        <?= "$   ". $row2['product_price'] ?>
+                        <?= "$   ". $row['product_price'] ?>
                     </div>
                     <div class="box-product-button">
-                        <div class="minus red" onclick="remove(<?= $row2['product_id'] . ',\'' . $row2['product_price'] . '\'' ?>, 1)">
+                        <div class="minus red" onclick="remove(<?= $row['product_id'] . ',\'' . $row['product_price'] . '\'' ?>, 1)">
                             <img src="../../images/minus.svg" alt="">
                         </div>
-                        <div class="quantity" id="cantidad<?= $row2['product_id'] ?>"></div>
-                        <div class="plus red" id="letrero<?= $row2['product_id'] ?>" onclick="add(<?= $row2['product_id'] . ',\'' . addslashes($row2['product_description']) . '\',\''. htmlspecialchars($departmentName) .'\',\'' . $row2['product_price'] . '\',\'' . addslashes($row2['product_image']) . '\'' ?>, 1)">
+                        <div class="quantity" id="cantidad<?= $row['product_id'] ?>"></div>
+                        <div class="plus red" id="letrero<?= $row['product_id'] ?>" onclick="add(<?= $row['product_id'] . ',\'' . addslashes($row['product_description']) . '\',\''. htmlspecialchars($departmentName) .'\',\'' . $row['product_price'] . '\',\'' . addslashes($row['product_image']) . '\'' ?>, 1)">
                             <div class="plus-string">Añadir</div>
                             <img src="../../images/plus.svg" class="plus-image">
                         </div>
@@ -70,9 +96,7 @@ mysqli_close($Conn);
                 </div>
 
             <?php }
-        }
-
-        ?>
+        } ?>
 
         </div>
     </div>
@@ -85,36 +109,49 @@ mysqli_close($Conn);
 
 <script>
 
-const boxCatalog = document.querySelector('.box-catalog');
-/*
-function adjustHeight() {
-
-    const bar = document.querySelector('.bar');
-    const coolNavbar = document.querySelector('.cool-navbar');
-    const productLowPadding = document.querySelector('.product-low-padding');
-    const boxProduct = document.querySelector('.box-product');
+function favorite(userId,productId,Add) {
     
-    const estilo = getComputedStyle(boxCatalog);
-    const gap = parseFloat(estilo.gap);
-    const boxProductHeight = parseFloat(getComputedStyle(boxProduct).height);
-    let lessHeight;
+    const favorite = document.getElementById('box-product-favorite' + productId);
+    const heart = document.querySelector('.heart-icon' + productId);
+    favorite.setAttribute('onclick', ``);
 
-    if (coolNavbar) {lessHeight = boxProductHeight + (gap * 2);}
+    let link = "";
 
-    else {
-        const barHeight = parseFloat(getComputedStyle(bar).height);
-        lessHeight = boxProductHeight + barHeight + (gap * 2);
-    }
-    
-    const totalHeight = window.innerHeight - lessHeight;
-    
-    productLowPadding.style.height = totalHeight + "px";
+    const data = {
+        userId: userId,
+        productId: productId
+    };
+
+    link = Add ? '../../includes/favorites.php' : '../../includes/unfavorites.php';
+
+    fetch(link, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+        }
+        return response.text(); // O `response.json()` si el servidor devuelve JSON
+    })
+    .then(result => {
+        let icon = Add ? '../../images/heart-fill.svg' : '../../images/heart.svg';
+        heart.src = icon;
+        console.log(icon);
+        favorite.setAttribute('onclick', `favorite(${userId},${productId},${Add ? 0 : 1})`);
+
+        console.log('Respuesta del servidor:', result);
+    })
+    .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+    });
 }
 
-window.addEventListener('resize', adjustHeight);
-window.addEventListener('scroll', adjustHeight);
-window.addEventListener('load', adjustHeight);
-*/
+const boxCatalog = document.querySelector('.box-catalog');
+
 function fadeAppear(){
     
     const fadeTop = document.querySelector('.fade-top');

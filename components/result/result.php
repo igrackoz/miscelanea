@@ -24,6 +24,22 @@ while ($row = mysqli_fetch_assoc($dataset)) {
     $departmentMap[$row['department_id']] = $row['department_name'];
 }
 
+$product_query = "SELECT p.product_id, p.product_image, p.product_description, p.product_price, p.product_stock, p.product_available, p.department_id, d.department_name
+          FROM products p
+          JOIN departments d ON p.department_id = d.department_id
+          WHERE p.product_id IN (SELECT product_id FROM favorites WHERE user_id = ?)";
+$product_stmt = mysqli_prepare($Conn, $product_query);
+mysqli_stmt_bind_param($product_stmt, 'i', $id);
+mysqli_stmt_execute($product_stmt);
+$product_dataset = mysqli_stmt_get_result($product_stmt);
+
+$favorite_query = "SELECT favorite_id, product_id, user_id FROM favorites WHERE user_id = ?";
+$favorite_stmt = mysqli_prepare($Conn, $favorite_query);
+mysqli_stmt_bind_param($favorite_stmt, 'i', $id);
+mysqli_stmt_execute($favorite_stmt);
+$favorite_dataset = mysqli_stmt_get_result($favorite_stmt);
+
+mysqli_close($Conn);
 
 ?>
 
@@ -53,11 +69,30 @@ while ($row = mysqli_fetch_assoc($dataset)) {
                     if (isset($departmentMap[$producto['department_id']])) {
                         // Reemplazamos el id con el nombre correspondiente
                         $producto['department_id'] = $departmentMap[$producto['department_id']];
-                    } ?>
+                    } 
+                    
+                    $favorite = true;
+
+                    if (mysqli_num_rows($favorite_dataset) > 0) {
+
+                        mysqli_data_seek($favorite_dataset, 0);
+
+                        while ($favorite_row = mysqli_fetch_assoc($favorite_dataset)) {
+                            
+                            if ($favorite_row['product_id'] == $producto['product_id']) {
+                                $favorite = false;
+                            }
+                        }
+                    }
+
+                    ?>
                     
                     <div class="box-product" class="box-dep" id="<?= $producto['product_id'] ?>">
                     <div class="box-product-image">
-                        <img style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= $producto['department_id'] ?>/<?= $producto['product_image'] ?>">
+                        <div class="box-product-favorite" id="box-product-favorite<?= $producto['product_id'] ?>" onclick="favorite(<?= $id . ',' . $producto['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
+                            <img class="heart-icon<?= $producto['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
+                        </div>
+                        <img class="box-product-photo" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= $producto['department_id'] ?>/<?= $producto['product_image'] ?>">
                     </div>
                     <div class="box-product-name">
                         <?= $producto['product_description'].'<br>' ?>
@@ -81,9 +116,6 @@ while ($row = mysqli_fetch_assoc($dataset)) {
                 echo "<p>No se encontraron productos para esta búsqueda.</p><br>";
             }
         }
-
-        
-        mysqli_close($Conn);
         
         ?>
         </div>
@@ -97,38 +129,45 @@ while ($row = mysqli_fetch_assoc($dataset)) {
 
 <script>
 
-const boxCatalog = document.querySelector('.box-catalog');
-const boxProduct = document.querySelector('.box-product');
-/*
-function adjustHeight() {
+function favorite(userId,productId,Add) {
+    
+    const favorite = document.getElementById('box-product-favorite' + productId);
+    const heart = document.querySelector('.heart-icon' + productId);
+    favorite.setAttribute('onclick', ``);
 
-    const bar = document.querySelector('.bar');
-    const coolNavbar = document.querySelector('.cool-navbar');
-    const productLowPadding = document.querySelector('.product-low-padding');
-    const boxProduct = document.querySelector('.box-product');
-    
-    const estilo = getComputedStyle(boxCatalog);
-    const gap = parseFloat(estilo.gap);
-    
-    const boxProductHeight = parseFloat(getComputedStyle(boxProduct).height);
-    let lessHeight;
+    let link = "";
 
-    if (coolNavbar) {lessHeight = boxProductHeight + (gap * 2);}
+    const data = {
+        userId: userId,
+        productId: productId
+    };
 
-    else {
-        const barHeight = parseFloat(getComputedStyle(bar).height);
-        lessHeight = boxProductHeight + barHeight + (gap * 2);
-    }
-    
-    const totalHeight = window.innerHeight - lessHeight;
-    
-    productLowPadding.style.height = totalHeight + "px";
+    link = Add ? '../../includes/favorites.php' : '../../includes/unfavorites.php';
+
+    fetch(link, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+        }
+        return response.text(); // O `response.json()` si el servidor devuelve JSON
+    })
+    .then(result => {
+        let icon = Add ? '../../images/heart-fill.svg' : '../../images/heart.svg';
+        heart.src = icon;
+        console.log(icon);
+        favorite.setAttribute('onclick', `favorite(${userId},${productId},${Add ? 0 : 1})`);
+
+        console.log('Respuesta del servidor:', result);
+    })
+    .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+    });
 }
 
-
-
-window.addEventListener('resize', adjustHeight);
-window.addEventListener('scroll', adjustHeight);
-window.addEventListener('load', adjustHeight);
-*/
 </script>

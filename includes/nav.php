@@ -73,7 +73,7 @@
 
             <div class="menu-element" id="menu-element">
                 <div id="menu-img">
-                    <img class="menu-icon" src="../../images/heart.svg">
+                    <img class="menu-icon" src="../../images/heart-menu.svg">
                 </div>
                 Favoritos
             </div>
