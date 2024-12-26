@@ -39,6 +39,8 @@ mysqli_close($Conn);
     <div style="margin-top: 50px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
         <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
     </div>
+    <div style="margin-bottom: 50px; display: flex; justify-content: center; align-items: center; font-size: 30px;">FAVORITOS</div>
+
     <div class="main-container">
         <div class="box-catalog">
         
