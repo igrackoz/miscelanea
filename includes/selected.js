@@ -296,6 +296,7 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
         }
     }
 }
+
 function iconNotification(productQuantity,isAdd) {
 
     const notificationNumber = document.querySelector('.notification-number');
