@@ -28,7 +28,7 @@ if (isset($_GET['products']) && isset($_GET['payment']) && isset($_GET['user']))
     
     $message = $productList . $paymentList . $userInfo;
 }
-    
+
 include_once '../../includes/user-validation.php';
 
 use PHPMailer\PHPMailer\PHPMailer;

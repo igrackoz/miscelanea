@@ -13,6 +13,9 @@ if(isset($_SESSION['id'])){
     $email = $_SESSION['email'];
     $color = $_SESSION['color'];
 
-} else { }
+} else { 
+
+    $id = 0;
+}
 
 ?>

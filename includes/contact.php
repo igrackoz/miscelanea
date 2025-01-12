@@ -1,6 +1,6 @@
 <a href="https://api.whatsapp.com/send?phone=528781167110" target="_blank">
     <div class="btn-contact" id="contact" onmouseenter="contact_hoverin()" onmouseleave="contact_hoverout()">
-        <img class="logo-contact" id="logo" src="../../images/wa_logo.svg">
+        <img class="logo-contact" id="logo" src="../../images/whatsapp.svg">
     </div>
 </a>
 <div class="hover-popup" id="popup">Contáctanos por WhatsApp</strong></div>

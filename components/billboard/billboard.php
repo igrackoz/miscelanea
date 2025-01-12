@@ -14,9 +14,13 @@ mysqli_close($Conn);
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
     
@@ -93,9 +97,31 @@ mysqli_close($Conn);
                         <a href="../segment/segment.php?iddep=<?= $row['department_id'] ?>" class="box-dep">
                             <div><?= $row['department_name'] ?></div>
                             <div>
-                                <img class="dep-image" src="../../images/departments/<?= $row['department_image'] ?>">
+                                <img class="dep-image dep-image-charge<?= $row['department_id'] ?>" src="../../images/box.svg" data-original="../../images/departments/<?= $row['department_image'] ?>">
                             </div>
                         </a>
+                        <script>
+                            const images<?= $row['department_id'] ?> = document.querySelectorAll('.dep-image-charge<?= $row['department_id'] ?>');
+
+                            images<?= $row['department_id'] ?>.forEach(image => {
+                                // Guardar el src original
+                                const originalSrc = image.getAttribute('data-original');
+
+                                // Crear una nueva instancia para cargar la imagen original
+                                const tempImg = new Image();
+                                tempImg.src = originalSrc;
+
+                                tempImg.onload = function () {
+                                    // Reemplazar la imagen temporal con la original una vez cargada
+                                    image.src = originalSrc;
+                                };
+
+                                tempImg.onerror = function () {
+                                    // En caso de error, mostrar una imagen alternativa
+                                    image.src = '../../images/box.svg'; // Cambia esto por la ruta de tu imagen de error
+                                };
+                            });
+                        </script>
 
                     <?php }
                 }

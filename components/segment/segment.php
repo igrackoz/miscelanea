@@ -7,21 +7,29 @@ include $bp."dbconnect.php";
 
 $iddep = $_GET['iddep'];
 
-$query = "SELECT department_name FROM departments WHERE department_id = ".$iddep;
-$dataset = mysqli_query($Conn,$query);
-$departmentName = mysqli_fetch_assoc($dataset)['department_name'];
+/*
+    $query = "SELECT department_name FROM departments WHERE department_id = ".$iddep;
+    $dataset = mysqli_query($Conn,$query);
+    $departmentName = mysqli_fetch_assoc($dataset)['department_name'];
+*/
 
+$query = "SELECT department_name FROM departments WHERE department_id = ?";
+$stmt = $Conn->prepare($query);
+$stmt->bind_param("i", $iddep);
+$stmt->execute();
+$result = $stmt->get_result();
+$departmentName = $result->fetch_assoc()['department_name'] ?? null;
+
+$query = "SELECT segment_id, segment_name, segment_image, department_id FROM segments WHERE department_id = ?";
+$stmt = $Conn->prepare($query);
+$stmt->bind_param("i", $iddep);
+mysqli_stmt_execute($stmt);
+$segment_dataset = mysqli_stmt_get_result($stmt);
 
 $query2 = "SELECT product_id, product_image, product_description, product_price, product_stock, product_available
             FROM products
             WHERE department_id = ".$iddep;
 $dataset2 = mysqli_query($Conn,$query2);
-
-$favorite_query = "SELECT favorite_id, product_id, user_id FROM favorites WHERE user_id = ?";
-$stmt = mysqli_prepare($Conn, $favorite_query);
-mysqli_stmt_bind_param($stmt, 'i', $id);
-mysqli_stmt_execute($stmt);
-$favorite_dataset = mysqli_stmt_get_result($stmt);
 
 mysqli_close($Conn);
 
@@ -29,17 +37,21 @@ mysqli_close($Conn);
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
 
     <div class="fade-top">
-        <div class="dep-title"><?= htmlspecialchars($departmentName) ?></div>
+        <div class="subdep-title"><?= htmlspecialchars($departmentName) ?></div>
     </div>
 
-    <div style="margin-top: 50px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
+    <div style="padding-top: 50px; padding-bottom: 20px; display: flex; justify-content: center; align-items: center;">
         <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
     </div>
     <div style="margin-bottom: 50px;  display: flex; justify-content: center; align-items: center; font-size: 30px; color:rgb(48, 48, 48);"><?= htmlspecialchars($departmentName) ?></div>
@@ -47,56 +59,56 @@ mysqli_close($Conn);
     <div class="main-container">
         <div class="box-catalog">
         
-        <?php
-        
+            <?php
 
-        if (mysqli_num_rows($dataset2) > 0) {
+            if (mysqli_num_rows($segment_dataset) > 0) {
 
-            while ($row = mysqli_fetch_assoc($dataset2)) {
+                while ($segment_row = mysqli_fetch_assoc($segment_dataset)) { ?>
 
-                $favorite = true;
-
-                if (mysqli_num_rows($favorite_dataset) > 0) {
-
-                    mysqli_data_seek($favorite_dataset, 0);
-
-                    while ($favorite_row = mysqli_fetch_assoc($favorite_dataset)) {
-                        
-                        if ($favorite_row['product_id'] == $row['product_id']) {
-                            $favorite = false;
-                        }
-                    }
-                }
-
-                ?>
-
-                <div class="box-product" class="box-dep" id="<?= $row['product_id'] ?>">
-                    <div class="box-product-image">
-                        <div class="box-product-favorite" id="box-product-favorite<?= $row['product_id'] ?>" onclick="favorite(<?= $id . ',' . $row['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
-                            <img class="heart-icon<?= $row['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
+                    <a href="../../includes/paging.php?iddep=<?= $segment_row['department_id'] ?>&idsubdep=<?= $segment_row['segment_id'] ?>" class="box-segment" class="box-subdep" id="<?= $segment_row['segment_id'] ?>">
+                        <div class="box-segment-image">
+                            <img class="box-segment-photo subdep-image-charge<?= $segment_row['segment_id'] ?>" src="../../images/groceries.svg" data-original="../../images/departments/<?= htmlspecialchars($departmentName) ?>/<?= $segment_row['segment_name'] ?>/<?= $segment_row['segment_image'] ?>">
                         </div>
-                        <img class="box-product-photo" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= htmlspecialchars($departmentName) ?>/<?= $row['product_image'] ?>">
-                    </div>
-                    <div class="box-product-name">
-                        <?= $row['product_description'] ?>
-                    </div>
-                    <div class="box-product-price">
-                        <?= "$   ". $row['product_price'] ?>
-                    </div>
-                    <div class="box-product-button">
-                        <div class="minus red" onclick="remove(<?= $row['product_id'] . ',\'' . $row['product_price'] . '\'' ?>, 1)">
-                            <img src="../../images/minus.svg" alt="">
+                        <div class="box-segment-name">
+                            <?= $segment_row['segment_name'] ?>
                         </div>
-                        <div class="quantity" id="cantidad<?= $row['product_id'] ?>"></div>
-                        <div class="plus red" id="letrero<?= $row['product_id'] ?>" onclick="add(<?= $row['product_id'] . ',\'' . addslashes($row['product_description']) . '\',\''. htmlspecialchars($departmentName) .'\',\'' . $row['product_price'] . '\',\'' . addslashes($row['product_image']) . '\'' ?>, 1)">
-                            <div class="plus-string">Añadir</div>
-                            <img src="../../images/plus.svg" class="plus-image">
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                    <script>
+                        const images<?= $segment_row['segment_id'] ?> = document.querySelectorAll('.subdep-image-charge<?= $segment_row['segment_id'] ?>');
 
-            <?php }
-        } ?>
+                        images<?= $segment_row['segment_id'] ?>.forEach(image => {
+                            // Guardar el src original
+                            const originalSrc = image.getAttribute('data-original');
+
+                            // Crear una nueva instancia para cargar la imagen original
+                            const tempImg = new Image();
+                            tempImg.src = originalSrc;
+
+                            tempImg.onload = function () {
+                                // Ocultar temporalmente la imagen de carga
+                                image.style.transition = 'none'; // Quitar transición para ocultar inmediatamente
+                                image.style.opacity = '0';
+
+                                // Cambiar el src a la imagen original
+                                setTimeout(() => {
+                                    image.src = originalSrc;
+
+                                    // Aplicar el fade-in después de actualizar el src
+                                    image.style.transition = 'opacity 0.5s';
+                                    image.style.opacity = '1';
+                                }, 50); // Pequeño retraso para asegurar el cambio de src
+                            };
+
+                            tempImg.onerror = function () {
+                                // En caso de error, mostrar una imagen alternativa
+                                image.src = '../../images/error.svg';
+                                image.style.opacity = '1';
+                            };
+                        });
+                    </script>
+
+                <?php }
+            } ?>
 
         </div>
     </div>

@@ -11,7 +11,6 @@ require_once $bp."head.php";
         <div class="row mt-5 mb-5">
             <img style="height: 130px; width: 150px;" src="../../images/logo.jpg" class="rounded mx-auto d-block">
         </div>
-        
         <div class="row justify-content-center">
             <div class="row" style="width: 600px;">
                 <div class="col">
@@ -25,41 +24,23 @@ require_once $bp."head.php";
                             switch($info){
                                 case "correo_duplicado":
                                     ?>
-                                    <p class="alert alert-danger">Este usuario ya se encuentra registrado</p>
+                                    <p class="alert alert-danger">Este correo ya se encuentra registrado.</p>
                                     <?php
                                     break;
-                                case "password_invalido":
+                                case "password_match":
                                     ?>
-                                    <p class="alert alert-success">Usuario o contraseña invalido</p>
-                                    <?php
-                                    break;
-                                case "registro_exitoso":
-                                    ?>
-                                    <p class="alert alert-success">Se ha registrado con éxito, ya puede iniciar sesión</p>
+                                    <p class="alert alert-danger">Contraseñas no coinciden.</p>
                                     <?php
                                     break;
                                 default:
                                     ?>
-                                    <p class="alert alert-danger">Error desconocido en el registro</p>
+                                    <p class="alert alert-danger">Error desconocido en el registro.</p>
                                     <?php
                                     break;
                             }
                         }?>
-                        <?php
-                            if (isset($_GET['info']) && $_GET['info'] == 1) {
-                            ?>
-                                <p class="alert alert-danger">Contraseñas no coinciden</p>
-                            <?php
-                            }
-                        ?>
-                        <?php
-                            if (isset($_GET['info']) && $_GET['info'] = 1) {
-                            ?>
-                                <p class="alert alert-danger">Este correo ya ha sido registrado</p>
-                            <?php
-                            }
-                        ?>
-                        <form action="insertar_usuario.php" method="POST" class="w-100">
+                        <form action="insertar_usuario.php" id="commentForm" method="POST" class="w-100">
+                        <fieldset>
                             <div class="d-flex mb-3 d-flex justify-content-between">
                                 <div class="input-group-lg">
                                     <input class="col form-control input-lg" type="text" name="nombre" id="nombre" placeholder="Nombre(s)" required>
@@ -80,6 +61,9 @@ require_once $bp."head.php";
                                 <input class="form-control input-lg" type="password" name="password_verif" id="password_verif" placeholder="Repetir contraseña" required>
                             </div>
                             <div class="mb-3 input-group-lg">
+                                <input class="form-control input-lg" type="tel" name="telefono" id="telefono" placeholder="telefono" maxlenght="13" required>
+                            </div>
+                            <div class="mb-3 input-group-lg">
                                 <input class="form-control input-lg" type="text" name="calle" id="calle" placeholder="Calle" required>
                             </div>
                             <div class="mb-3 input-group-lg">
@@ -91,7 +75,12 @@ require_once $bp."head.php";
                             <div class="input-group-lg d-flex flex-row-reverse">
                                 <button class="btn btn-lg" style="background-color: #e64747; color: white;" type="submit" name="submit" id="submit">Registrarse</button>
                             </div>
+                            <div id="error-message" class="text-danger mt-3"></div>
+                        </fieldset>
                         </form>
+                        <script>
+                            $("#commentForm").validate();
+                        </script>
                     </div> 
                 </div>
             </div>
@@ -114,5 +103,40 @@ document.getElementById("numero").addEventListener("input", function(event) {
     }
 
 });
+
+document.getElementById("telefono").addEventListener("input", function(event) {
+    // Eliminar cualquier carácter no numérico
+    this.value = this.value.replace(/[^0-9]/g, '');
+    
+    // Limitar a 10 dígitos
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+    }
+
+    // Formatear con espacios después de cada bloque de 3 dígitos
+    this.value = this.value.replace(/(\d{3})(\d{1,3})(\d{1,4})?/, function(_, g1, g2, g3) {
+        return [g1, g2, g3].filter(Boolean).join(' ');
+    });
+});
   
+</script>
+
+<script>
+    document.getElementById('#commentForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita el envío del formulario
+
+        const emailInput = document.getElementById('email').value;
+        const errorMessage = document.getElementById('error-message');
+
+        // Expresión regular para validar el email
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(emailInput)) {
+            errorMessage.textContent = 'Por favor, ingrese un correo electrónico válido que contenga un punto en el dominio.';
+        } else {
+            errorMessage.textContent = ''; // Limpia el mensaje de error
+            // Aquí puedes proceder con el envío del formulario o cualquier otra acción
+            alert('Correo electrónico válido: ' + emailInput);
+        }
+    });
 </script>

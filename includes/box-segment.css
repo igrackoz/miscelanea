@@ -1,0 +1,45 @@
+.box-segment{
+
+    width: auto;
+    max-width: 225px;
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    border-radius: 6px;
+    padding: 10px;
+    background-color:rgb(253, 254, 255);
+    box-shadow: -1px 2px 42px -48px rgba(0,0,0,0.75);
+    z-index: 0;
+}
+
+.box-segment-image{
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    grid-row: 1 / 2;
+}
+
+.box-segment-photo{
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1 ;
+    object-fit: cover; /* O 'contain' según el caso */
+    object-position: center;
+}
+
+.box-segment-name{
+
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    grid-row: 2 / 3;
+}

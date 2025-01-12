@@ -1,0 +1,18 @@
+body,html{
+    padding: 0 !important;
+    margin: 0  !important;   
+}
+
+.panel-container{
+
+    display: flex;
+}
+
+.panel-sidenav{
+
+    height: 100vh;
+    width: 200px;
+    background-color: rgb(69, 71, 109);
+    color: #fff;
+    padding: 20px;
+}

@@ -41,4 +41,3 @@ $smtp_password = getenv('SMTP_PASSWORD');
 $Conn = mysqli_connect($db_server,$db_user,$db_password,$db_name) or
     die("Conexión fallida: ".mysqli_connect_error());
     mysqli_set_charset($Conn,"utf8");
-

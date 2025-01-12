@@ -1,10 +1,20 @@
+.search-shadow{
+
+    position: fixed;
+    background-color: #000;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    opacity: 0.5;
+    z-index: 9;
+}
 
 .bar{
 
     height:25mm;
     width: 100%;
     display: grid;
-    grid-template-columns: [start] 25mm [two] 100px [three] 600px [four] 1fr [five] auto [six] 25mm [end];
+    grid-template-columns: [start] 25mm [two] 100px [three] 600px [four] 1fr [five] 1fr [six] 25mm [end];
     grid-template-rows: [start] 100% [end];
     z-index:10;
 }
@@ -394,7 +404,7 @@ input::placeholder {
     font-size: 16px;
     font-weight: bold;
     user-select: none;
-    color: rgb(186, 186, 186);
+    color: rgb(185, 185, 185);
 }
 
 @media only screen and (max-width: 1100px) {
@@ -433,7 +443,7 @@ input::placeholder {
     .bar{
 
         height:18mm;
-        grid-template-columns: [start] 18mm [two] auto [three] 20mm [four] 105px [five] auto [six] 18mm [end];
+        grid-template-columns: [start] 18mm [two] 1fr [three] 20mm [four] 105px [five] 1fr [six] 18mm [end];
     }
     
     .menu{
@@ -449,6 +459,7 @@ input::placeholder {
     
     .brand{
         
+        width: 20mm;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -484,7 +495,7 @@ input::placeholder {
     
     .bar{
 
-        grid-template-columns: [start] 18mm [two] auto [three] 18mm [four] auto [five] 18mm [end];
+        grid-template-columns: [start] 18mm [two] 1fr [three] 18mm [four] 1fr [five] 18mm [end];
     }
     
     .menu{

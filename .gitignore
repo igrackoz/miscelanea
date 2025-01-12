@@ -6,5 +6,4 @@ vendor
 vendor2
 test
 includes/.env
-checkout
 administrator/insert

@@ -5,15 +5,21 @@ include $bp."user-validation.php";
 include $bp."head.php";
 include $bp."dbconnect.php";
 
-// Asegúrate de que $Conn esté correctamente definido
-
-if (isset($_GET['resultados'])) {
-    $resultadosCodificados = $_GET['resultados'];
-    $resultadosTotales = unserialize(urldecode($resultadosCodificados));
-} else {
-    echo "<p>No se han recibido resultados de búsqueda.</p>";
+if (isset($_GET['busqueda'])) {
+    $search = $_GET['busqueda'];
 }
 
+if (isset($_GET['page']) && isset($_SESSION['urlsArray'])) {
+
+    $urlsArray = $_SESSION['urlsArray'];
+    $page = $_GET['page'];
+    
+    if (isset($_GET['search'])) {
+        $encoded_results = $_GET['search'];
+        $results = json_decode(urldecode($encoded_results), true); // Decodificar y convertir de nuevo en array
+    }
+
+}
 
 $query = "SELECT department_id, department_name FROM departments";
 $dataset = mysqli_query($Conn, $query);
@@ -43,32 +49,35 @@ mysqli_close($Conn);
 
 ?>
 
-
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
 
-    <div style="height: 50px;"></div>
-    <div style="font-size: 30px; font-weight: light;">Buscaste: ...</div>
-    <div style="height: 50px;"></div>
+<div style="padding-top: 50px; margin-bottom: 40px; display: flex; justify-content: center; align-items: center;">
+        <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
+    </div>
+    <div style="padding-left: 20px; display: flex; justify-content: start; align-items: center; font-size: 22px; color: #333;">Buscaste:&nbsp;&nbsp;&nbsp;<strong><?php echo $search; ?></strong></div>
 
+    <?php include $bp."page-number.php"; ?>
     <div class="main-container">
         <div class="box-catalog">
         <?php
         // Recorrer el array de resultados y mostrar los datos campo por campo
-        foreach ($resultadosTotales as $entrada => $productos) {
+        if (isset($results)) {
 
-            // Revisamos si hay productos en esta categoría
-            if (!empty($productos)) {
-                foreach ($productos as $producto) {
+            foreach ($results as $row) {
                     
-                    if (isset($departmentMap[$producto['department_id']])) {
+                    if (isset($departmentMap[$row['department_id']])) {
                         // Reemplazamos el id con el nombre correspondiente
-                        $producto['department_id'] = $departmentMap[$producto['department_id']];
+                        $row['department_id'] = $departmentMap[$row['department_id']];
                     } 
                     
                     $favorite = true;
@@ -79,7 +88,7 @@ mysqli_close($Conn);
 
                         while ($favorite_row = mysqli_fetch_assoc($favorite_dataset)) {
                             
-                            if ($favorite_row['product_id'] == $producto['product_id']) {
+                            if ($favorite_row['product_id'] == $row['product_id']) {
                                 $favorite = false;
                             }
                         }
@@ -87,42 +96,63 @@ mysqli_close($Conn);
 
                     ?>
                     
-                    <div class="box-product" class="box-dep" id="<?= $producto['product_id'] ?>">
+                    <div class="box-product" class="box-dep" id="<?= $row['product_id'] ?>">
                     <div class="box-product-image">
-                        <div class="box-product-favorite" id="box-product-favorite<?= $producto['product_id'] ?>" onclick="favorite(<?= $id . ',' . $producto['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
-                            <img class="heart-icon<?= $producto['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
+                        <div class="box-product-favorite" id="box-product-favorite<?= $row['product_id'] ?>" onclick="favorite(<?= $id . ',' . $row['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
+                            <img class="heart-icon<?= $row['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
                         </div>
-                        <img class="box-product-photo" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= $producto['department_id'] ?>/<?= $producto['product_image'] ?>">
+                        <img class="box-product-photo product-image-charge<?= $row['product_id'] ?>" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/product.svg" data-original="../../images/departments/<?= $row['department_id'] ?>/<?= $row['product_image'] ?>">
                     </div>
                     <div class="box-product-name">
-                        <?= $producto['product_description'].'<br>' ?>
+                        <?= $row['product_description'].'<br>' ?>
                     </div>
                     <div class="box-product-price">
-                        <?= "$   ". $producto['product_price'].'<br>' ?>
+                        <?= "$   ". number_format($row['product_price'], 2).'<br>' ?>
                     </div>
                     <div class="box-product-button">
-                        <div class="minus red" onclick="remove(<?= $producto['product_id'] . ',\'' . $producto['product_price'] . '\'' ?>, 1)">
+                        <div class="minus red" onclick="remove(<?= $row['product_id'] . ',\'' . number_format($row['product_price'], 2) . '\'' ?>, 1)">
                             <img src="../../images/minus.svg" alt="">
                         </div>
-                        <div class="quantity" id="cantidad<?= $producto['product_id'] ?>"></div>
-                        <div class="plus red" id="letrero<?= $producto['product_id'] ?>" onclick="add(<?= $producto['product_id'] . ',\'' . addslashes($producto['product_description']) . '\',\''. $producto['department_id'] .'\',\'' . $producto['product_price'] . '\',\'' . addslashes($producto['product_image']) . '\'' ?>, 1)">
+                        <div class="quantity" id="cantidad<?= $row['product_id'] ?>"></div>
+                        <div class="plus red" id="letrero<?= $row['product_id'] ?>" onclick="add(<?= $row['product_id'] . ',\'' . addslashes($row['product_description']) . '\',\''. $row['department_id'] .'\',\'' . number_format($row['product_price'], 2) . '\',\'' . addslashes($row['product_image']) . '\'' ?>, 1)">
                             <div class="plus-string">Añadir</div>
                             <img src="../../images/plus.svg" class="plus-image">
                         </div>
                     </div>
                 </div>
-                <?php }
-            } else {
-                echo "<p>No se encontraron productos para esta búsqueda.</p><br>";
-            }
-        }
+
+                <script>
+                    const images<?= $row['product_id'] ?> = document.querySelectorAll('.product-image-charge<?= $row['product_id'] ?>');
+                    imageLoader(images<?= $row['product_id'] ?>);
+                </script>
+
+            <?php } ?>
+
+        <?php } else { ?>
+
+            <div style="
+                height: 300px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                gap: 30px;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <img src="../../images/emoji-frown.svg">
+                <div>
+                    <div style="font-size: 28px; font-weight: bold; color: #333; text-align: center;">No se encontraron coincidencias.</div>
+                    <div style="font-size: 18px; color: #333; text-align: center;">Intenta una nueva busqueda en el navegador.</div>
+                </div>
+            </div>
         
-        ?>
+        <?php } ?>
+
         </div>
     </div>
-    <div style="font-size: 20px; height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
-        Página 1
-    </div>
+    <?php include $bp."page-number.php"; ?>
     <?php include '../../includes/footer-image.php'; ?>
 </body>
 </html>

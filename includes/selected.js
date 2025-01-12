@@ -228,7 +228,7 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
         var commission = document.getElementById('div22Text2'); 
 
         const cartFullPrice = document.getElementById('full' + productId);
-        cartFullPrice.textContent = '$ ' + productPrice*productQuantity + '.00';
+        cartFullPrice.textContent = '$ ' + Number(productPrice*productQuantity).toFixed(2);
 
         contenidoTexto += isAdd ? parseFloat(productPrice) : -parseFloat(productPrice);
 
@@ -241,7 +241,7 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
          
         ocultaTexto.textContent = numero + " productos";   
 
-        cartValueNumber.textContent = '$ ' + contenidoTexto + '.00';
+        cartValueNumber.textContent = '$ ' + Number(contenidoTexto).toFixed(2);
 
         if (exactoValue) {
 
@@ -289,10 +289,10 @@ function cartUpdate(productId,productPrice,productQuantity,isAdd) {
             total = parseFloat(valueNumberDiv.textContent.substring(2)) - com;
             com = Math.ceil(total / 20);
 
-            total_view.textContent = "$ " + total + ".00";
-            commission.textContent = "+ $ " + com + ".00";
+            total_view.textContent = "$ " + Number(total).toFixed(2);
+            commission.textContent = "+ $ " + Number(com).toFixed(2);
 
-            valueNumberDiv.textContent = "$ " + (total + com) + ".00";
+            valueNumberDiv.textContent = "$ " + Number(total + com).toFixed(2);
         }
     }
 }

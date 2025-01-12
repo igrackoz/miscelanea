@@ -5,20 +5,19 @@ include $bp."user-validation.php";
 include $bp."head.php";
 include $bp."dbconnect.php";
 
-$query = "SELECT p.product_id, p.product_image, p.product_description, p.product_price, p.product_stock, p.product_available, p.department_id, d.department_name
-          FROM products p
-          JOIN departments d ON p.department_id = d.department_id
-          WHERE p.product_id IN (SELECT product_id FROM favorites WHERE user_id = ?)";
-$stmt = mysqli_prepare($Conn, $query);
-mysqli_stmt_bind_param($stmt, 'i', $id);
-mysqli_stmt_execute($stmt);
-$dataset = mysqli_stmt_get_result($stmt);
+$urlsArray = $_SESSION['urlsArray'];
+$page = $_GET['page'];
+
+if (isset($_GET['slot'])) {
+    $encoded_results = $_GET['slot'];
+    $results = json_decode(urldecode($encoded_results), true); // Decodificar y convertir de nuevo en array
+}
 
 $favorite_query = "SELECT favorite_id, product_id, user_id FROM favorites WHERE user_id = ?";
-$stmt = mysqli_prepare($Conn, $favorite_query);
-mysqli_stmt_bind_param($stmt, 'i', $id);
-mysqli_stmt_execute($stmt);
-$favorite_dataset = mysqli_stmt_get_result($stmt);
+$favorite_stmt = mysqli_prepare($Conn, $favorite_query);
+mysqli_stmt_bind_param($favorite_stmt, 'i', $id);
+mysqli_stmt_execute($favorite_stmt);
+$favorite_dataset = mysqli_stmt_get_result($favorite_stmt);
 
 mysqli_close($Conn);
 
@@ -26,9 +25,13 @@ mysqli_close($Conn);
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
 
@@ -36,19 +39,19 @@ mysqli_close($Conn);
         <div class="dep-title">FAVORITOS</div>
     </div>
 
-    <div style="margin-top: 50px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
+    <div style="padding-top: 50px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
         <img style="height: 100px; width: 150px; filter: brightness(0) saturate(100%) invert(38%) sepia(1%) saturate(1225%) hue-rotate(323deg) brightness(91%) contrast(93%);" src="../../images/logo2.svg" alt="">
     </div>
-    <div style="margin-bottom: 50px; display: flex; justify-content: center; align-items: center; font-size: 30px;">FAVORITOS</div>
-
+    <div style="display: flex; justify-content: center; align-items: center; font-size: 30px;">FAVORITOS</div>
+    <?php include $bp."page-number.php"; ?>
     <div class="main-container">
         <div class="box-catalog">
         
         <?php
 
-        if (mysqli_num_rows($dataset) > 0) {
+        if ($results) {
 
-            while ($row = mysqli_fetch_assoc($dataset)) {
+            foreach ($results as $row) {
 
                 $favorite = true;
 
@@ -71,16 +74,16 @@ mysqli_close($Conn);
                         <div class="box-product-favorite" id="box-product-favorite<?= $row['product_id'] ?>" onclick="favorite(<?= $id . ',' . $row['product_id'] ?>,<?= $favorite ? '1' : '0' ?>)">
                             <img class="heart-icon<?= $row['product_id'] ?>" src="../../images/<?= $favorite ? 'heart' : 'heart-fill' ?>.svg">
                         </div>
-                        <img class="box-product-photo" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/departments/<?= $row['department_name'] ?>/<?= $row['product_image'] ?>">
+                        <img class="box-product-photo product-image-charge<?= $row['product_id'] ?>" style="width: 100%; height: auto; aspect-ratio: 1 / 1 ;" src="../../images/product.svg" data-original="../../images/departments/<?= $row['department_name'] ?>/<?= $row['product_image'] ?>">
                     </div>
                     <div class="box-product-name">
                         <?= $row['product_description'] ?>
                     </div>
                     <div class="box-product-price">
-                        <?= "$   ". $row['product_price'] ?>
+                        <?= "$   ". number_format($row['product_price'], 2) ?>
                     </div>
                     <div class="box-product-button">
-                        <div class="minus red" onclick="remove(<?= $row['product_id'] . ',\'' . $row['product_price'] . '\'' ?>, 1)">
+                        <div class="minus red" onclick="remove(<?= $row['product_id'] . ',\'' . number_format($row['product_price'], 2) . '\'' ?>, 1)">
                             <img src="../../images/minus.svg" alt="">
                         </div>
                         <div class="quantity" id="cantidad<?= $row['product_id'] ?>"></div>
@@ -90,16 +93,19 @@ mysqli_close($Conn);
                         </div>
                     </div>
                 </div>
+                
+                <script>
+                    const images<?= $row['product_id'] ?> = document.querySelectorAll('.product-image-charge<?= $row['product_id'] ?>');
+                    imageLoader(images<?= $row['product_id'] ?>);
+                </script>
 
             <?php }
         } ?>
 
         </div>
     </div>
-    <div style="font-size: 20px; height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
-        Página 1
-    </div>
-    <?php include '../../includes/footer-image.php'; ?>
+    <?php include $bp."page-number.php"; ?>
+    <?php include $bp."footer-image.php"; ?>
 </body>
 </html>
 

@@ -4,7 +4,7 @@
     max-width: 225px;
     display: grid;
     overflow: hidden;
-    grid-template-columns: [start] auto [one] auto [end];
+    grid-template-columns: 1fr;
     grid-template-rows: [start] auto [one] auto [two] auto [three] auto [end];
     border-radius: 6px;
     padding: 10px;
@@ -21,8 +21,6 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
 
-    grid-column-start: start;
-    grid-column-end: end;
     grid-row-start: start;
     grid-row-end: one;
 }
@@ -56,8 +54,6 @@
 
     height: 85px;
     font-size: 18px;
-    grid-column-start: start;
-    grid-column-end: end;
     grid-row-start: one;
     grid-row-end: two;
 }
@@ -69,8 +65,6 @@
     margin-top: 15px;
     margin-bottom: 15px;
 
-    grid-column-start: start;
-    grid-column-end: end;
     grid-row-start: two;
     grid-row-end: three;
 }
@@ -80,13 +74,11 @@
     height: 50px;
     display: grid;
     gap: 5px;
-    grid-template-columns: [start] 50px [two] auto [three] 50px [end];
+    grid-template-columns: [start] 50px [two] 1fr [three] 50px [end];
     grid-template-rows: [start] auto [end];
 
-    grid-column-start: start;
-    grid-column-end: end;
     grid-row-start: three;
-    grid-row-end: end;        
+    grid-row-end: end;
 }
 
 .plus{

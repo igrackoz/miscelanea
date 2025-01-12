@@ -14,9 +14,13 @@ mysqli_close($Conn);
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
     

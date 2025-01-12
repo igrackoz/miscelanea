@@ -21,9 +21,13 @@ mysqli_close($Conn);
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
     <div class="cart-alert-shadow">
@@ -408,7 +412,7 @@ function shipping() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    if (cartArray && cartArray.length > 0) { console.log("cart");// Verificar si hay productos en el sessionStorage
+    if (cartArray && cartArray.length > 0) { // Verificar si hay productos en el sessionStorage
 
         // Al empezar a llenar el formulario se ocultan los productos y aparece un desplegable
         // que muestra solo el número de productos
@@ -468,9 +472,11 @@ document.addEventListener('DOMContentLoaded', function() {
             cartProducts.id = 'cart-product';
 
             imageDiv.className = 'cart-image';
+
             const img = document.createElement('img');
-            img.className = 'cart-image-values';
-            img.src = `../../images/departments/${elemento.productDepartment}/${elemento.productImage}`;
+            img.className = 'cart-image-values product-image-charge' + elemento.productId;
+            img.setAttribute('data-original', `../../images/departments/${elemento.productDepartment}/${elemento.productImage}`)
+            img.src = "../../images/product.svg";
             imageDiv.appendChild(img);
 
             dataDiv.className = 'cart-data';
@@ -480,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dataDiv.appendChild(descriptionDiv);
 
                 priceDiv.className = 'cart-price';
-                priceDiv.textContent =   '$ ' + elemento.productPrice;
+                priceDiv.textContent =   '$ ' + Number(elemento.productPrice).toFixed(2);
                 dataDiv.appendChild(priceDiv);
 
             quantityDiv.className = 'cart-quantity';
@@ -522,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fullPriceDiv.className = 'cart-full-price';
             fullPriceDiv.id = 'full' + elemento.productId;
-            fullPriceDiv.textContent = '$ ' + elemento.productPrice*elemento.productQuantity + '.00';
+            fullPriceDiv.textContent = '$ ' + Number(elemento.productPrice*elemento.productQuantity).toFixed(2);
 
             [quantityMinusDiv,quantityStockDiv,quantityPlusDiv].forEach(element => quantityDiv.appendChild(element));
             [imageDiv,dataDiv,quantityDiv,deleteDiv,fullPriceDiv].forEach(element => cartProducts.appendChild(element));
@@ -537,6 +543,36 @@ document.addEventListener('DOMContentLoaded', function() {
             cartProductsContainer.appendChild(separatorDiv);
 
             total += elemento.productPrice*elemento.productQuantity;
+
+            const script = document.createElement('script');
+            script.textContent = `
+                const images` + elemento.productId + ` = document.querySelectorAll('.product-image-charge` + elemento.productId + `');
+                
+                images` + elemento.productId + `.forEach(image => {
+                    const originalSrc = image.getAttribute('data-original');
+                    const tempImg = new Image();
+                    tempImg.src = originalSrc;
+
+                    tempImg.onload = function () {
+                        image.style.transition = 'none';
+                        image.style.opacity = '0';
+
+                        setTimeout(() => {
+                            image.src = originalSrc;
+                            image.style.transition = 'opacity 0.5s';
+                            image.style.opacity = '1';
+                        }, 50);
+                    };
+
+                    tempImg.onerror = function () {
+                        image.src = '../../images/error.svg';
+                        image.style.opacity = '1';
+                    };
+                });
+            `;
+            cartProductsContainer.appendChild(script);
+
+
         });
 
         ocultaTexto.textContent = totalProducts + " productos";
@@ -679,7 +715,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             colorDisabling();
                             //ticketButton.style.display = "none";
 
-                            valueNumberDiv.textContent = "$ " + total + ".00";
+                            valueNumberDiv.textContent = "$ " + Number(total).toFixed(2);
 
                             if (input1.checked) {
 
@@ -750,8 +786,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             com = Math.ceil(total / 20);
 
-                            div21Text2.textContent = "$ " + total + ".00";
-                            div22Text2.textContent = "+ $ " + com + ".00";
+                            div21Text2.textContent = "$ " + Number(total).toFixed(2);
+                            div22Text2.textContent = "+ $ " + Number(com).toFixed(2);
                             div1.style.display = 'none';
 
                             if (input2.checked) {
@@ -776,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 }
 
                                 div2.style.display = 'block';
-                                valueNumberDiv.textContent = "$ " + (total + com) + ".00";
+                                valueNumberDiv.textContent = "$ " + Number(total + com).toFixed(2);
 
                                 cambioInsertar.style.display = 'flex';
                                 cambioValueDiv.style.display = 'none';
@@ -807,7 +843,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             //ticketButton.style.display = "none";
                                 
                                 div2.style.display = 'none';
-                                valueNumberDiv.textContent = "$ " + total + ".00";
+                                valueNumberDiv.textContent = "$ " + Number(total).toFixed(2);
                                 com = 0;
                             }
 
@@ -825,7 +861,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         } else {
 
-                            valueNumberDiv.textContent = "$ " + total + ".00";
+                            valueNumberDiv.textContent = "$ " + Number(total).toFixed(2);
                             
                             div1.style.display = 'none';
                             div2.style.display = 'none';
@@ -942,7 +978,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 cambioValueDiv.style.display = "none";
                                 cambioValue.textContent = "";
                                 regresoValue.textContent = "$ 0.00"; 
-                                exactoValue.textContent = "$ " + total + ".00";
+                                exactoValue.textContent = "$ " + Number(total).toFixed(2);
                                 
                                 label1.style.color = "";
                                 label2.style.color = "";
@@ -1075,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const exactoValue = document.createElement("div");
                     exactoValue.id = "exactoValue";
                     exactoValue.style = "font-size: 22px;";
-                    exactoValue.textContent = "$ " + total + ".00";
+                    exactoValue.textContent = "$ " + Number(total).toFixed(2);
                     exacto.appendChild(exactoValue);
                 //
                 // TIPO DE MONEDA
@@ -1143,7 +1179,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         const pesoText = document.createElement("div");
                         pesoText.textContent = "MXN";
                         peso.appendChild(pesoText);
-
                     //
                     // DOLAR ESTADOUNIDENSE
                     const dolar = document.createElement("div");
@@ -1507,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const valueNumberDiv = document.createElement('div');
             valueNumberDiv.className = 'cart-value-number';
-            valueNumberDiv.textContent = '$ ' + total + '.00';
+            valueNumberDiv.textContent = '$ ' + Number(total).toFixed(2);
             valueDiv.appendChild(valueNumberDiv);
         //
         // separador
@@ -1531,7 +1566,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const regresoValue = document.createElement("div");
             regresoValue.id = "regresoValue";
             regresoValue.style = "font-size: 22px;";
-            regresoValue.textContent = "$ " + cambioVal + ".00";
+            regresoValue.textContent = "$ " + Number(cambioVal).toFixed(2);
             regreso.appendChild(regresoValue);
 
         //
@@ -1557,9 +1592,9 @@ function noprods(){
     iconDiv.style = 'margin-top: 40px;';
     cartProductsContainer.appendChild(iconDiv);
 
-    const iconImageDiv = document.createElement('img');
-    iconImageDiv.src = '../../images/cart-red.svg';
-    iconDiv.appendChild(iconImageDiv);
+        const iconImageDiv = document.createElement('img');
+        iconImageDiv.src = '../../images/cart-red.svg';
+        iconDiv.appendChild(iconImageDiv);
 
     const noProductsMessageDiv = document.createElement('div');
     noProductsMessageDiv.textContent = 'No hay productos en tu carrito.';

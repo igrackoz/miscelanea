@@ -1,3 +1,4 @@
+
 <div class="bar sticky-top red">
     <div class="menu-panel" id="menu-panel">
         <div class="close-menu" id="close-menu">
@@ -83,7 +84,7 @@
                 </div>
                 Carrito
             </a>
-            <a href="../../includes/logout.php">
+            <a href="../../includes/logout.php?page=<?= $pagina_actual ?>">
                 <div class="menu-element" id="menu-element" style="color:#e8104a;">
                     <div id="menu-img">
                         <img class="menu-icon" src="../../images/box-arrow-left2.svg">

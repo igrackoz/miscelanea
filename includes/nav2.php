@@ -1,3 +1,4 @@
+<div class="search-shadow"></div>
 <div class="cool-navbar red" id="cool-navbar" style="z-index: 999;">
     <div class="start-search" id="start-search"></div>
     <a href="../billboard/billboard.php" class="cool-elements">
@@ -16,7 +17,7 @@
             <img id="search-image" src="../../images/search.svg">
         </div>
     </div>
-    <form action="../../includes/search.php" method="GET" class="nav2-form">
+    <form action="../../includes/search copy.php" method="GET" class="nav2-form">
         <div class="entry" id="entry">
             <input type="text" class="cool-search" name="cool-search" id="cool-search" placeholder="¿Qué Buscas?">
         </div>
@@ -104,6 +105,7 @@ function bigger(){
     const nav2Form = document.querySelector('.nav2-form');
     const cancel = document.querySelectorAll('.dinamic-cancel');
     const coolElements = document.querySelectorAll('.cool-elements');
+    const searchShadow = document.querySelector('.search-shadow');
 
     if (coolnav.classList.contains('big')) {
 
@@ -111,6 +113,7 @@ function bigger(){
         search.classList.remove('move');
         entry.blur();
         nav2Form.style.display = "none";
+        searchShadow.style.display = "none";
         entry.classList.remove('show');
         coolnav.classList.remove('big');
         coolElements.forEach(element => {
@@ -129,6 +132,7 @@ function bigger(){
         search.classList.toggle('move', true);
         entry.classList.toggle('show', true);
         nav2Form.style.display = "block";
+        searchShadow.style.display = "block";
         entry.focus();
         coolnav.classList.toggle('small', false);
 
@@ -151,11 +155,13 @@ function bigger2(){
     const nav2Form = document.querySelector('.nav2-form');
     const cancel = document.querySelectorAll('.dinamic-cancel');
     const coolElements = document.querySelectorAll('.cool-elements');
+    const searchShadow = document.querySelector('.search-shadow');
 
     coolnav.classList.add('small');
     search.classList.remove('move');
     entry.blur();
     nav2Form.style.display = "none";
+    searchShadow.style.display = "none";
     entry.classList.remove('show');
     coolnav.classList.remove('big');
     coolElements.forEach(element => {

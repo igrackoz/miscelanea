@@ -8,9 +8,10 @@
 
 .cart-box{
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 250px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20% auto 20%;
     background-color: #fff;
     padding: 10px;
     border-radius: 10px;
@@ -19,13 +20,48 @@
     grid-column-start: 1;
     grid-column-end: 2;
 
-}
+    }.cart-box-top{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        grid-row-start: 1;
+        grid-row-end: 2;
+
+    }.cart-box-middle{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        grid-row-start: 2;
+        grid-row-end: 3;
+
+        }.cart-box-middle-text{
+
+            font-size: 24px;
+            font-weight: bold;
+        }
+    
+    .cart-box-bottom{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+
+        grid-row-start: 3;
+        grid-row-end: 4;
+
+    }
 
 .favorites-box{
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20% auto 20%;
     background-color: #fff;
     padding: 10px;
     border-radius: 10px;
@@ -33,7 +69,36 @@
     
     grid-column-start: 2;
     grid-column-end: 3;
-}
+
+    }.favorites-box-top{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        grid-row-start: 1;
+        grid-row-end: 2;
+
+    }.favorites-box-middle{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        grid-row-start: 2;
+        grid-row-end: 3;
+
+    }.favorites-box-bottom{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+
+        grid-row-start: 3;
+        grid-row-end: 4;
+
+    }
 
 .cart-notification{
 
@@ -59,4 +124,18 @@
     grid-row-start: 2;
     grid-row-end: 5;
     z-index: 0;
+}
+
+.account-menu{
+    
+    height: 80px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 0px 10px 10px 10px;
+    gap: 15px;
+    border-radius: 10px;
+    font-size: 20px;
 }

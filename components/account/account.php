@@ -11,15 +11,26 @@ $query = "SELECT user_id, user_email, user_street, user_num_ext, user_phone FROM
 $dataset = mysqli_query($Conn,$query);
 $row = mysqli_fetch_assoc($dataset);
 
+$favorite_query = "SELECT favorite_id, product_id, user_id FROM favorites WHERE user_id = ?";
+$favorite_stmt = mysqli_prepare($Conn, $favorite_query);
+mysqli_stmt_bind_param($favorite_stmt, 'i', $id);
+mysqli_stmt_execute($favorite_stmt);
+$favorite_dataset = mysqli_stmt_get_result($favorite_stmt);
+$favorite_row = mysqli_num_rows($favorite_dataset);
+
 mysqli_close($Conn);
 
 ?>
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
         include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
-        include $bp."contact.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
         include "../../dev/dev.php";
     ?>
     <div style="height: 50px;"></div>
@@ -72,15 +83,15 @@ mysqli_close($Conn);
     
     <div style="margin-left: 10px; margin-right: 10px; border-radius: 10px; background-color: white; box-shadow: -1px 2px 42px -48px rgba(0,0,0,0.75);">
         <div class="address">
-            <div><?= $row['user_email'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_email'] ?></div>
         </div>
         <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
         <div class="address">
-            <div><?= $row['user_street'].", #".$row['user_num_ext'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_street'].", #".$row['user_num_ext'] ?></div>
         </div>
         <div style="background-color: #ccc; height: 1px; width: 100%;"></div>
         <div class="address">
-            <div><?= $row['user_phone'] ?></div>&nbsp;&nbsp;<img src="../../images/pencil.svg">
+            <div><?= $row['user_phone'] ?></div>
         </div>
     </div>
 
@@ -92,22 +103,38 @@ mysqli_close($Conn);
     </div>
 
     <div class="account-container">
-        <a href="../cart/cart.php">
-            <div class="cart-box red">
-                <div class="inner-div">
-
-                </div>
+        <a href="../cart/cart.php" class="cart-box">
+            <div class="cart-box-top"></div>
+            <div class="cart-box-middle">
+                <img src="../../images/cart-fill-panel.svg">
+                <div class="cart-box-middle-text"></div>
             </div>
+            <div class="cart-box-bottom">productos</div>
         </a>
-        <a href="../favorites/favorites.php" class="favorites-box">
-            artículos favoritos
+        <a href="../../includes/paging.php" class="favorites-box">
+            <div class="favorites-box-top"></div>
+            <div class="favorites-box-middle">
+                <img src="../../images/heart-fill-panel.svg">
+            </div>
+            <div class="favorites-box-bottom"><?= $favorite_row ?> favoritos</div>
         </a>
     </div>
-
-
-    <div style="display: flex; justify-content: center; font-size: 20px;">
-        Cerrar Sesión
-    </div>
+    <a href="../services/services.php" class="account-menu">
+        <div>Servicios</div>
+    </a>
+    <a href="../services/services.php" class="account-menu" style="color: #333;">
+        <div>Ayuda</div>
+    </a>
+    <a href="../services/services.php" class="account-menu style="color: #333;">
+        <div>Buzón de sugerencias</div>
+    </a>
+    <a href="../services/services.php" class="account-menu" style="color: #333;">
+        <div>Acerca de</div>
+    </a>
+    <a href="../../includes/logout.php?page=account" class="account-menu" style="color: red;">
+        <img class="menu-icon" src="../../images/box-arrow-left2.svg">
+        <div>Cerrar Sesión</div>
+    </a>
     <?php include '../../includes/footer-image.php'; ?>
 </body>
 </html>
@@ -130,23 +157,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-            
-    const div1 = document.createElement('div');
-    div1.style = 'font-size: 30px;';
-    div1.innerHTML = 'Carrito de Compras';
-    innerDiv.appendChild(div1);
+    const cartBoxMiddleText = document.querySelector('.cart-box-middle-text');
+    cartBoxMiddleText.innerHTML = '$ ' + subtotal + '.00';
 
-    const div2 = document.createElement('div');
-    div2.innerHTML = cantidad + ' productos';
-    innerDiv.appendChild(div2);
-
-    const div3 = document.createElement('div');
-    div3.style = 'font-size: 40px; right: 0; bottom: 0;';
-    innerDiv.appendChild(div3);
-
-    const strong = document.createElement('strong');
-    strong.innerHTML = '$ ' + subtotal + '.00';
-    div3.appendChild(strong);
+    const cartBoxMiddle = document.querySelector('.cart-box-bottom');
+    cartBoxMiddle.innerHTML = cantidad + ' productos';
 });  
 
 </script>

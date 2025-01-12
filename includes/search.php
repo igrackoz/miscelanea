@@ -14,8 +14,6 @@ $resultado = array_filter($arreglo, function ($palabra) use ($conectores) {
 
 // echo "Palabras filtradas: " . htmlspecialchars(implode(', ', $resultado)) . "<br>";
 
-
-require '../vendor2/vendor/autoload.php';
 require 'dbconnect.php';
 
 try {
@@ -35,6 +33,7 @@ try {
 
         if ($resultados) {
             $resultadosTotales[$entrada] = $resultados; // Guardar resultados en el array de resultados
+            break;
         } else {
             $resultadosTotales[$entrada] = []; // No hay resultados para esta entrada
         }
