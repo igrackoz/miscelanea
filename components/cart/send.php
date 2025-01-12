@@ -9,9 +9,13 @@ include $bp."dbconnect.php";
 
 <body>
     <?php
+        include $bp."loading.php";
         include $bp."mobile-detector.php";
-        if (!$detect->isTablet() && !$detect->isMobile()) include $bp."nav.php";
-        include "../../dev/dev.php";
+        include $detect->isTablet() || $detect->isMobile() ? $bp . "nav2.php" : $bp . "nav.php";
+        $file_to_include = $detect->isTablet() || $detect->isMobile() ? "" : $bp . "contact.php";
+        if (trim($file_to_include) !== "") {
+            include $file_to_include;
+        }
     ?>
 
     <?php if ($_GET['status'] == "success") { ?>

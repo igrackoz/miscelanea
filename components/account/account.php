@@ -31,7 +31,6 @@ mysqli_close($Conn);
         if (trim($file_to_include) !== "") {
             include $file_to_include;
         }
-        include "../../dev/dev.php";
     ?>
     <div style="height: 50px;"></div>
     <div style="height: 150px; width: 100%; margin-bottom: 30px; display: flex; gap: 20px; flex-direction: column; align-items: center; justify-content:space-around;">

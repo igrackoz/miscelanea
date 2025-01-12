@@ -32,7 +32,6 @@ mysqli_close($Conn);
         if (trim($file_to_include) !== "") {
             include $file_to_include;
         }
-        include "../../dev/dev.php";
     ?>
 
     <div class="fade-top">

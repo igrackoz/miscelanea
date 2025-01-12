@@ -58,7 +58,6 @@ mysqli_close($Conn);
         if (trim($file_to_include) !== "") {
             include $file_to_include;
         }
-        include "../../dev/dev.php";
     ?>
 
 <div style="padding-top: 50px; margin-bottom: 40px; display: flex; justify-content: center; align-items: center;">
