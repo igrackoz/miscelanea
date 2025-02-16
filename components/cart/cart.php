@@ -1746,6 +1746,8 @@ window.addEventListener('resize', () => {
 
 function colorEnabling() {
         
+    cartButton.classList.toggle('cart-button');
+
     cartButton.style.backgroundColor = "#0D6EFD";
     cartButton.style.color = "#fff";
     cartButton.style.userSelect = "auto";/*

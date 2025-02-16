@@ -54,3 +54,14 @@ include $bp."dbconnect.php";
 
 </body>
 </html>
+
+<script>
+
+let status = "<?= $_GET['status'] ?>";
+
+if (status == "success") {
+    
+    sessionStorage.removeItem('carrito');
+}
+
+</script>
